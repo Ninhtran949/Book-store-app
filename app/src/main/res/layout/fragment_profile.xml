@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_profile"
+    android:background="@drawable/loginbkg_1"
     android:clickable="true"
     android:gravity="center"
     tools:context=".Fragment.Profile.ProfileFragment">
