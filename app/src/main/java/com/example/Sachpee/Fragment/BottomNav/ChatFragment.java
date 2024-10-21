@@ -75,7 +75,7 @@ public class ChatFragment extends Fragment {
 
     private void initiateWebSocket() {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("ws://192.168.15.19:8080").build();
+        Request request = new Request.Builder().url("ws://192.168.15.15:8080").build();
         webSocket = client.newWebSocket(request, new WebSocketListener() {
             private final WeakReference<ChatFragment> fragmentRef = new WeakReference<>(ChatFragment.this);
 

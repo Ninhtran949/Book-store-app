@@ -2,8 +2,8 @@ package com.example.Sachpee.Fragment.BottomNav;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -34,7 +34,7 @@ import com.example.Sachpee.Model.ProductTop;
 import com.example.Sachpee.R;
 import com.example.Sachpee.Service.ApiClient;
 import com.example.Sachpee.Service.ApiService;
-  
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -83,10 +83,17 @@ public class HomePageFragment extends Fragment {
     private ViewPager viewPager;
     private ImageSliderAdapter imageSliderAdapter;
     private CircleIndicator circleIndicator;
-
+    private Handler handler;
+    private Runnable runnable;
+    private int currentPage = 0;
+    private final int delayMillis = 5000; // Thay đổi sau mỗi 5 giây
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        handler = new Handler();
+    }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
@@ -94,14 +101,18 @@ public class HomePageFragment extends Fragment {
         viewPager = view.findViewById(R.id.main_slider_image);
         circleIndicator = view.findViewById(R.id.circle_indicator);
 
-        list.add(new ImageSlider(R.drawable.banner_0803));
-        list.add(new ImageSlider(R.drawable.banner_book));
-        list.add(new ImageSlider(R.drawable.banner_kim_dong));
-        list.add(new ImageSlider(R.drawable.banner_fahasa));
+        list.add(new ImageSlider(R.drawable.banner06));
+        list.add(new ImageSlider(R.drawable.banner02));
+        list.add(new ImageSlider(R.drawable.banner08));
+        list.add(new ImageSlider(R.drawable.slide1));
+        list.add(new ImageSlider(R.drawable.slide2));
+        list.add(new ImageSlider(R.drawable.slide3));
 
         imageSliderAdapter = new ImageSliderAdapter(getContext(), list);
         viewPager.setAdapter(imageSliderAdapter);
         circleIndicator.setViewPager(viewPager);
+
+        startAutoSlide();
 
         adapter = new ProductAdapter(listVanhoc,fragment,getContext());
         getTopProduct();
@@ -197,7 +208,30 @@ public class HomePageFragment extends Fragment {
 
         return view;
     }
+    private void startAutoSlide() {
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (currentPage == list.size()) {
+                    currentPage = 0; // Quay lại trang đầu tiên nếu đến trang cuối
+                }
+                viewPager.setCurrentItem(currentPage++, true);
+                handler.postDelayed(this, delayMillis); // Đặt lại runnable sau mỗi 5 giây
+            }
+        };
+        handler.postDelayed(runnable, delayMillis); // Bắt đầu tự động chuyển đổi
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable); // Dừng tự động chuyển đổi khi tạm dừng fragment
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        handler.postDelayed(runnable, delayMillis); // Tiếp tục tự động chuyển đổi khi quay lại fragment
+    }
     public void getTopProduct() {
         // Giả định bạn có ApiService và phương thức getTopProducts() trả về danh sách ProductTop
         ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
@@ -335,15 +369,15 @@ public class HomePageFragment extends Fragment {
     }
 
     public void add(List<ProductTop> listTop, List<Product> listProduct ,List<Product> listProductTop ){
-    for (int i = 0; i < listTop.size(); i++) {
-        for (int j = 0; j < listProduct.size(); j++) {
-            if (listTop.get(i).getIdProduct() == listProduct.get(j).getCodeProduct() ){
-                listProductTop.add(listProduct.get(j));
+        for (int i = 0; i < listTop.size(); i++) {
+            for (int j = 0; j < listProduct.size(); j++) {
+                if (listTop.get(i).getIdProduct() == listProduct.get(j).getCodeProduct() ){
+                    listProductTop.add(listProduct.get(j));
+                }
             }
-        }
 
+        }
     }
-}
     public void collections(List<Product> listProductTop ){
 //        for (int i = 0; i < listTop.size(); i++) {
 //            for (int j = 0; j < listProduct.size(); j++) {

@@ -1,0 +1,232 @@
+[33mcommit fe3cc602ff3c1303510ee48add82925fb3e6d631[m[33m ([m[1;36mHEAD[m[33m)[m
+Author: hoaroy <hoaroy2710@gmail.com>
+Date:   Fri Oct 18 02:36:37 2024 +0700
+
+    4 button
+    
+    (cherry picked from commit 50c6c68b28143c78fb635c784cc92e8cac6450c8)
+
+[33mcommit fff26afe31161caa51273b8093c5ea3ac94ba8c5[m[33m ([m[1;32mnewbranch[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Fri Oct 18 01:13:42 2024 +0700
+
+    edit3
+
+[33mcommit b4ee5a9d94e4137ccef0a74a9b0dfba5e4bce41f[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Wed Oct 16 17:57:09 2024 +0700
+
+    edit2
+
+[33mcommit 5bbe15b8194ba9853f67a276a1b5a6f21444a0a2[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Mon Oct 14 14:29:32 2024 +0700
+
+    edit
+
+[33mcommit 2a4287c9de5cea77b4cf4dec33019da3dc32508d[m
+Merge: 0e21575 ed4992e
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Sat Oct 12 23:09:15 2024 +0700
+
+    Merge remote-tracking branch 'origin/master'
+
+[33mcommit 0e21575ca93f6ae13a8355214e08f2ca279ba2e1[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Sat Oct 12 23:06:13 2024 +0700
+
+    ok button
+
+[33mcommit ed4992e1efb403431363ee69096afb068ccf0095[m
+Merge: 1b2b989 b333943
+Author: hoaroy <101579764+hoaroy@users.noreply.github.com>
+Date:   Sat Oct 12 22:31:36 2024 +0700
+
+    Merge pull request #4 from Ninhtran949/my-feature-branch
+    
+    Merge pull request #3 from hoaroy/master
+
+[33mcommit b3339433c3f37269a3be9821a7f93685caf6f09f[m[33m ([m[1;31morigin/my-feature-branch[m[33m)[m
+Merge: 0259613 8d480d1
+Author: hoaroy <101579764+hoaroy@users.noreply.github.com>
+Date:   Sat Oct 12 22:28:10 2024 +0700
+
+    Merge pull request #3 from hoaroy/master
+    
+    pull
+
+[33mcommit 1b2b989552ae564f7cf29df979fb2b128debbee5[m
+Merge: 5f23fee 8d480d1
+Author: Ninh Trần <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Sat Oct 12 22:13:46 2024 +0700
+
+    Merge pull request #2 from hoaroy/master
+    
+    Hoapull
+
+[33mcommit 8d480d177e78bca347f17f453e59c7d966bf1e32[m
+Author: hoaroy <hoaroy2710@gmail.com>
+Date:   Sat Oct 12 21:57:52 2024 +0700
+
+    4 button
+
+[33mcommit 27ca34a7c88db7034709fdf4f9e98dc46d2cd888[m
+Author: hoaroy <hoaroy2710@gmail.com>
+Date:   Sat Oct 12 19:21:57 2024 +0700
+
+    Added hello.txt file
+
+[33mcommit 5f23fee82077b9ebd11bea7118dc0539438f5c67[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Fri Oct 11 22:39:10 2024 +0700
+
+    begin map
+
+[33mcommit 0064fdd80dfd52719c1b807afdf6e74edd2f6c07[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Fri Oct 11 12:48:17 2024 +0700
+
+    Lưu các thay đổi trước khi chuyển nhánh
+
+[33mcommit aeb1e9e6650f16f0c2f11bedb816abeafb706b33[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Thu Oct 10 22:55:17 2024 +0700
+
+    Ok chat
+
+[33mcommit eda88e19917e82f59a941e50de6b50249faa7518[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Tue Oct 8 19:49:39 2024 +0700
+
+    Ok chat
+
+[33mcommit 44fdc9fba80d58bc4e3ec53923683f73eb4f12be[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Tue Oct 8 01:57:08 2024 +0700
+
+    Ok chat
+
+[33mcommit 044aca9dd89f35f3f7f82a5a56f449eeb6abc4cd[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Tue Oct 8 01:29:17 2024 +0700
+
+    Ok chat
+
+[33mcommit 63e0bbf1940c883cf2254f576929c8d5048e907b[m
+Merge: 9c1bb8e 0259613
+Author: Ninh Trần <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Mon Oct 7 17:53:16 2024 +0700
+
+    Merge pull request #1 from Ninhtran949/my-feature-branch
+    
+    new branch
+
+[33mcommit 0259613b4ef2f29ef4724027e5e2c5faa5489813[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Mon Oct 7 17:39:33 2024 +0700
+
+    new branch
+
+[33mcommit 9c1bb8edb779388270c177fe81dd3e3efe843812[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Sat Oct 5 22:41:53 2024 +0700
+
+    complete api
+
+[33mcommit 9a466ceaf82233bee3d5d2cc46f3a0bab0e1ac4c[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Thu Sep 26 23:52:49 2024 +0700
+
+    Begin convert db
+
+[33mcommit 872517b9a6a78f5af5985271ea8a4b38c22e2108[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Tue Sep 24 18:04:19 2024 +0700
+
+    ok10
+
+[33mcommit a82ae806072c11d25424bfece78fde8aea6bbd5e[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Wed Sep 18 16:00:11 2024 +0700
+
+    ok10
+
+[33mcommit 0593aff3becb1ad4e9af75f05b74526a4484ccba[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Thu Sep 12 17:19:03 2024 +0700
+
+    ok9
+
+[33mcommit 2f52d00cd4a1e30c3d0063358beefd24a5d8ac0e[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Thu Sep 12 16:13:47 2024 +0700
+
+    ok8
+
+[33mcommit dd85ecaa51462c1b5b6bacd73f0cbb456a484bb8[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Thu Sep 12 14:10:35 2024 +0700
+
+    ok8
+
+[33mcommit f02f03e4ebcac37e617e175145abc37c03e7efee[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Thu Sep 12 00:16:00 2024 +0700
+
+    ok7
+
+[33mcommit 7a0b901703f90b890c1aeefa30b7b9ea021f68ef[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Wed Sep 11 23:49:07 2024 +0700
+
+    ok7
+
+[33mcommit 380b94cf8490dacc1baeabd37778fec43a1ea18b[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Sun Sep 8 00:45:15 2024 +0700
+
+    ok6
+
+[33mcommit 3e6ffbff5266a130a74bf556ad22ef77220c7c47[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Sat Sep 7 00:20:40 2024 +0700
+
+    ok5
+
+[33mcommit 90f2895a4b95f59839bfe0691e2e11960ff3600b[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Fri Sep 6 09:34:47 2024 +0700
+
+    ok4
+
+[33mcommit e846cef2ba4041ff254d30ae2753ee6b46562d9b[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Tue Sep 3 17:50:34 2024 +0700
+
+    ok3
+
+[33mcommit bd9b6228dc6ea386fddf677ec1dbe0e68a8ff8af[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Tue Sep 3 17:08:14 2024 +0700
+
+    Revert "ok2"
+    
+    This reverts commit fa628a436f192c7d9b5b2c7f2a3b9724bbaed0c6.
+
+[33mcommit fa628a436f192c7d9b5b2c7f2a3b9724bbaed0c6[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Thu Aug 29 01:34:16 2024 +0700
+
+    ok2
+
+[33mcommit ce2250c0eded16161dee86362b967f179129f65d[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Thu Aug 29 01:18:00 2024 +0700
+
+    ok
+
+[33mcommit b1b3d55df0b1dce4b51da01369680f3c5bd074b3[m
+Author: Ninhtran949 <118685759+Ninhtran949@users.noreply.github.com>
+Date:   Wed Aug 28 00:41:16 2024 +0700
+
+    first commit
