@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "http://192.168.15.15:8080";  // Đặt URL API của bạn ở đây
+    private static final String BASE_URL = "http://192.168.15.15:8080";  // Đặt URL API  ở đây
 
     private static Retrofit retrofit;
 
