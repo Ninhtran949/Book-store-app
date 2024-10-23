@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -216,6 +217,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         String addressPartner = mLayoutAddress.getEditText().getText().toString();
         String userPartner = mLayoutPhoneNumber.getEditText().getText().toString();
 
+        // Cập nhật các giá trị mới vào đối tượng User
+        partner.setNamePartner(namePartner);
+        partner.setAddressPartner(addressPartner);
+        partner.setUserPartner(userPartner);
+
         // Xử lý hình ảnh thành Base64
         Bitmap bitmap = ((BitmapDrawable) ivAvatar.getDrawable()).getBitmap();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -278,53 +284,56 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private void updateUserInfo() {
         Log.d(TAG, "updateUserInfo: start");
 
-        user.setName(mLayoutName.getEditText().getText().toString());
-        user.setAddress(mLayoutAddress.getEditText().getText().toString());
-        user.setPhoneNumber(mLayoutPhoneNumber.getEditText().getText().toString());
+        // Cập nhật thông tin người dùng từ các trường nhập liệu
+        String nameUser = mLayoutName.getEditText().getText().toString();
+        String addressUser = mLayoutAddress.getEditText().getText().toString();
+        String userUser = mLayoutPhoneNumber.getEditText().getText().toString();
+
+        // Cập nhật các giá trị mới vào đối tượng User
+        user.setName(nameUser);
+        user.setAddress(addressUser);
+        user.setPhoneNumber(userUser);
+
+        // Xử lý hình ảnh thành Base64
         Bitmap bitmap = ((BitmapDrawable) ivAvatar.getDrawable()).getBitmap();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        byte[] imgByte = outputStream.toByteArray();
 
-        StorageReference spaceRef = mStorageReference.child("image/" + user.getId() + "_avatar.jpg");
-        ivAvatar.setDrawingCacheEnabled(true);
-        ivAvatar.buildDrawingCache();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
+        String imgUser;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            imgUser = java.util.Base64.getEncoder().encodeToString(imgByte);
+        } else {
+            imgUser = android.util.Base64.encodeToString(imgByte, android.util.Base64.DEFAULT);
+        }
 
-        UploadTask uploadTask = spaceRef.putBytes(data);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
+        // Chuyển đổi User thành Map
+        Map<String, Object> fields = user.toMap();
+        fields.put("avatar", imgUser); // Cập nhật hình ảnh
+
+        // Tạo instance của ApiService
+        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+
+        // Gọi API PATCH để cập nhật thông tin User
+        Call<Void> call = apiService.updateUser(user.getId(), fields);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-                Log.d(TAG, "onFailure: ");
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onComplete: User info updated successfully.");
+                    profileViewModel.setUser(user);  // Cập nhật User vào ViewModel
+                    Toast.makeText(requireContext(), "Đổi thông tin thành công", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e(TAG, "onResponse: Failed to update User. Code: " + response.code() + ", Error: " + response.message());
+                }
             }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-                spaceRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Log.d(TAG, "onSuccess: " + uri);
-                        user.setStrUriAvatar(uri.toString());
-                        DatabaseReference mDatabase;
-                        mDatabase = FirebaseDatabase.getInstance().getReference();
-                        Map<String, Object> userValue = user.toMap();
-                        Map<String, Object> userUpdateValue = new HashMap<>();
-                        userUpdateValue.put("/User/" + user.getId(), userValue);
-                        mDatabase.updateChildren(userUpdateValue).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                profileViewModel.setUser(user);
-                            }
-                        });
-                    }
-                });
-                //user.setUriAvatar(spaceRef.getDownloadUrl().getResult());
 
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e(TAG, "onFailure: Failed to update User. Error: " + t.getMessage());
             }
         });
-
     }
+
 
 }

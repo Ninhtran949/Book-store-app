@@ -103,6 +103,8 @@ public interface ApiService {
 
     @PATCH("/partners/{idPartner}")
     Call<Void> updatePartner(@Path("id") int idPartner, @Body Map<String, Object> fields);
+    @PATCH("/user/id/{id}")
+    Call<Void> updateUser(@Path("id") String id, @Body Map<String, Object> fields);
 
     @PATCH("/partners/{idPartner}")
     Call<Void> updatePartnerPassword(@Path("idPartner") int idPartner, @Body Partner partner);
