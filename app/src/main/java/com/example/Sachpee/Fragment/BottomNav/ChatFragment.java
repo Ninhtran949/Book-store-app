@@ -4,6 +4,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.Sachpee.Adapter.ChatMessageAdapter;
 import com.example.Sachpee.R;
 
 import org.json.JSONException;
@@ -22,12 +27,16 @@ import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatFragment extends Fragment {
     private WebSocket webSocket;
     private EditText messageInput;
     private EditText nameInput;
-    private TextView chatOutput;
+    private RecyclerView chatRecyclerView;
+    private ChatMessageAdapter chatMessageAdapter;
+    private List<String> chatMessages = new ArrayList<>();
     private String userName = "";
 
     @Nullable
@@ -37,24 +46,26 @@ public class ChatFragment extends Fragment {
 
         messageInput = view.findViewById(R.id.messageInput);
         nameInput = view.findViewById(R.id.nameInput);
-        chatOutput = view.findViewById(R.id.chatOutput);
+        chatRecyclerView = view.findViewById(R.id.chatRecyclerView);
         Button sendButton = view.findViewById(R.id.sendButton);
         Button submitNameButton = view.findViewById(R.id.submitNameButton);
+
+        chatMessageAdapter = new ChatMessageAdapter(chatMessages);
+        chatRecyclerView.setAdapter(chatMessageAdapter);
+        chatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         submitNameButton.setOnClickListener(v -> {
             userName = nameInput.getText().toString().trim();
             if (!userName.isEmpty()) {
-                initiateWebSocket(); //  kết nối khi tên đã được nhập
+                initiateWebSocket();
                 nameInput.setVisibility(View.GONE);
                 submitNameButton.setVisibility(View.GONE);
-//                chatOutput.append("Connecting as " + userName + "...\n");
             }
         });
 
         sendButton.setOnClickListener(v -> {
             String message = messageInput.getText().toString();
             if (!message.isEmpty() && !userName.isEmpty()) {
-                // Gửi message dưới dạng JSON
                 try {
                     JSONObject jsonMessage = new JSONObject();
                     jsonMessage.put("type", "chat");
@@ -83,7 +94,10 @@ public class ChatFragment extends Fragment {
             public void onOpen(@NonNull WebSocket webSocket, @NonNull okhttp3.Response response) {
                 ChatFragment fragment = fragmentRef.get();
                 if (fragment != null && fragment.isAdded()) {
-                    fragment.getActivity().runOnUiThread(() -> fragment.chatOutput.append("")); //Connected to server as " + fragment.userName + "\n
+                    fragment.getActivity().runOnUiThread(() -> {
+                        //chatMessages.add("Connected to server as " + fragment.userName);
+                        chatMessageAdapter.notifyDataSetChanged();
+                    });
                     webSocket.send("{\"type\":\"setName\", \"name\":\"" + fragment.userName + "\"}");
                 }
             }
@@ -99,34 +113,35 @@ public class ChatFragment extends Fragment {
 
                             switch (type) {
                                 case "success":
-                                    //fragment.chatOutput.append("You have successfully connected.\n");
                                     break;
                                 case "error":
                                     String errorMessage = message.getString("message");
-                                    fragment.chatOutput.append("Error: " + errorMessage + "\n");
+                                    chatMessages.add("Error: " + errorMessage);
                                     break;
                                 case "serverMessage":
                                     String serverMessage = message.getString("message");
                                     if (message.has("name")) {
                                         String name = message.getString("name");
-                                        fragment.chatOutput.append(name + serverMessage + "\n");
+                                        chatMessages.add(name + ": " + serverMessage);
                                     } else {
-                                        fragment.chatOutput.append(serverMessage + "\n");
+                                        chatMessages.add(serverMessage);
                                     }
                                     break;
                                 case "chat":
                                     String sender = message.getString("sender");
                                     String chatMessage = message.getString("message");
-                                    fragment.chatOutput.append(sender + ": " + chatMessage + "\n");
+                                    chatMessages.add(sender + ": " + chatMessage);
                                     break;
                                 default:
-                                    fragment.chatOutput.append("Unknown message type: " + type + "\n");
+                                    chatMessages.add("Unknown message type: " + type);
                                     break;
                             }
+                            chatMessageAdapter.notifyDataSetChanged();
+                            chatRecyclerView.scrollToPosition(chatMessages.size() - 1);
                         } catch (JSONException e) {
-                            fragment.chatOutput.append("Error parsing message: " + e.getMessage() + "\n");
+                            chatMessages.add("Error parsing message: " + e.getMessage());
                         } catch (Exception e) {
-                            fragment.chatOutput.append("Unexpected error: " + e.getMessage() + "\n");
+                            chatMessages.add("Unexpected error: " + e.getMessage());
                         }
                     });
                 }
@@ -137,7 +152,10 @@ public class ChatFragment extends Fragment {
                 ChatFragment fragment = fragmentRef.get();
                 if (fragment != null && fragment.isAdded()) {
                     webSocket.close(1000, null);
-                    fragment.getActivity().runOnUiThread(() -> fragment.chatOutput.append("Closing: " + reason + "\n"));
+                    fragment.getActivity().runOnUiThread(() -> {
+                        chatMessages.add("Closing: " + reason);
+                        chatMessageAdapter.notifyDataSetChanged();
+                    });
                 }
             }
 
@@ -145,7 +163,10 @@ public class ChatFragment extends Fragment {
             public void onFailure(@NonNull WebSocket webSocket, @NonNull Throwable t, @Nullable okhttp3.Response response) {
                 ChatFragment fragment = fragmentRef.get();
                 if (fragment != null && fragment.isAdded()) {
-                    fragment.getActivity().runOnUiThread(() -> fragment.chatOutput.append("Error: " + t.getMessage() + "\n"));
+                    fragment.getActivity().runOnUiThread(() -> {
+                        chatMessages.add("Error: " + t.getMessage());
+                        chatMessageAdapter.notifyDataSetChanged();
+                    });
                 }
             }
         });
