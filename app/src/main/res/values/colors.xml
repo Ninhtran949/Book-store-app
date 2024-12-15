@@ -18,4 +18,8 @@
     <color name="price_color">#FF0000</color>
     <color name="text_color">#AED6F1
     </color>
+
+    <color name="colorPrimary">#2196F3</color>
+
+    <color name="shimmer_color">#DDDDDD</color>
 </resources>

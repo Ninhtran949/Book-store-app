@@ -77,9 +77,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
 
     implementation('io.socket:socket.io-client:2.0.0') {
-        exclude group: 'org.json', module: 'json'             //socket.io
+
     }
     implementation 'io.socket:socket.io-client:2.0.0'
     implementation 'com.google.android.gms:play-services-maps:18.0.0' //map
-
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }

@@ -95,250 +95,252 @@
                     app:ci_drawable="@drawable/bg_indicator" />
             </LinearLayout>
 
-            <LinearLayout
+            <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_marginVertical="20dp"
-                android:orientation="horizontal"
-                android:weightSum="4">
+                android:paddingHorizontal="25dp"
+                android:scrollbars="none">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_vanhoc_home"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="10dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_vanhoc_home"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginHorizontal="5dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp">
 
-                        <ImageView
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/van_hoc_icon" />
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
 
-                        <TextView
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:padding="8dp"
+                                android:background="@drawable/van_hoc_icon" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/van_hoc_text"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_kinhte_home"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginHorizontal="5dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp">
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/van_hoc_text"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_kinhte_home"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="10dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:padding="8dp"
+                                android:background="@drawable/kinh_te_icon" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/kinh_t"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                        <ImageView
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_tamly_home"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginHorizontal="5dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp">
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/kinh_te_icon" />
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
 
-                        <TextView
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:padding="8dp"
+                                android:background="@drawable/tam_ly_icon" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tam_ly_ky_nang_song_text"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_giaoduc_home"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginHorizontal="5dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp">
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/kinh_t"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_tamly_home"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="10dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:padding="8dp"
+                                android:background="@drawable/giao_duc_icon" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/nuoi_day_con"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                        <ImageView
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_thieunhi_home"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginHorizontal="5dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp">
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:background="@drawable/tam_ly_icon" />
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
 
-                        <TextView
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:padding="8dp"
+                                android:background="@drawable/thieu_nhi" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Thiếu nhi"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_hoiky_home"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginHorizontal="5dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp">
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/tam_ly_ky_nang_song_text"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_giaoduc_home"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="10dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="10dp">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:padding="8dp"   
+                                android:background="@drawable/tieu_su_hoi_ky" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Hồi ký"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-                        <ImageView
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_giaokhoa_home"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginHorizontal="5dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp">
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:layout_marginHorizontal="5dp"
-                            android:background="@drawable/giao_duc_icon" />
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
 
-                        <TextView
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:padding="8dp"
+                                android:background="@drawable/giao_khoa" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Giáo khoa"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_ngoaingu_home"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginHorizontal="5dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="5dp">
+
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/nuoi_day_con"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
 
-            </LinearLayout>
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:padding="8dp"
+                                android:background="@drawable/ngoai_ngu" />
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Ngoại ngữ"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginVertical="20dp"
-                android:orientation="horizontal"
-                android:weightSum="4">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_thieunhi_home"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="10dp"
-                    app:cardCornerRadius="10dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/thieu_nhi" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Thiếu nhi"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_hoiky_home"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="10dp"
-                    app:cardCornerRadius="10dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/tieu_su_hoi_ky" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Hồi ký"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_giaokhoa_home"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="10dp"
-                    app:cardCornerRadius="10dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/giao_khoa" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Giáo khoa"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_ngoaingu_home"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="10dp"
-                    app:cardCornerRadius="10dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/ngoai_ngu" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Ngoại ngữ"
-                            android:textAlignment="center" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -346,394 +348,140 @@
                 android:layout_marginHorizontal="10dp"
                 android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_trending_home"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#EAF0F3"
-                    app:cardCornerRadius="15dp">
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_marginVertical="25dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@drawable/section_background">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="25dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@android:drawable/btn_star"
+                                app:tint="@color/colorPrimary"/>
 
                             <TextView
-                                android:layout_width="330dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="@string/trending_text"
                                 android:textColor="@color/black"
                                 android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:layout_marginStart="8dp"/>
 
-                            <ImageView
-                                android:id="@+id/arrow1"
+                            <TextView
+                                android:id="@+id/tv_view_all_trending"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:backgroundTint="#F1EAEA"
-                                android:src="@drawable/ic_arrow_drop_up"
-                                android:visibility="visible" />
+                                android:text="Xem tất cả"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="14sp"
+                                android:padding="8dp"
+                                android:background="?attr/selectableItemBackground"/>
                         </LinearLayout>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_trending_home"
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:visibility="gone" />
+                            android:layout_height="wrap_content">
 
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/shimmer_view_container"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="visible">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <include layout="@layout/shimmer_item_product"/>
+                                    <include layout="@layout/shimmer_item_product"/>
+                                    <include layout="@layout/shimmer_item_product"/>
+                                    <include layout="@layout/shimmer_item_product"/>
+
+                                </LinearLayout>
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_trending_home"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clipToPadding="false"
+                                android:paddingStart="8dp"
+                                android:paddingEnd="8dp"
+                                android:paddingBottom="16dp"
+                                android:visibility="gone"/>
+                        </FrameLayout>
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_Top_Kinhte"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:backgroundTint="#E9EEF3"
-
-                    app:cardCornerRadius="15dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_marginVertical="25dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/section_background">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal"
+                            android:padding="25dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_trending"
+                                app:tint="@color/colorPrimary"/>
 
                             <TextView
-                                android:layout_width="330dp"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:text="@string/sach_moi"
                                 android:textColor="@color/black"
                                 android:textSize="20sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/arrow2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:backgroundTint="#F1EAEA"
-                                android:src="@drawable/ic_arrow_drop_up"
-                                android:visibility="visible" />
-                        </LinearLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_KinhteTop_Home"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:visibility="gone" />
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_Top_Tamly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:backgroundTint="#FA8F6E"
-                    android:visibility="gone"
-
-                    app:cardCornerRadius="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginHorizontal="10dp"
-                            android:layout_marginVertical="25dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="330dp"
-                                android:layout_height="wrap_content"
-                                android:text="Những loại Tâm lý mua nhiều nhất"
-                                android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/arrow3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:backgroundTint="#F1EAEA"
-                                android:src="@drawable/ic_arrow_drop_up" />
-                        </LinearLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_TamlyTop_Home"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:visibility="gone" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_Top_Book"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:backgroundTint="#F16D64"
-                    android:visibility="gone"
-
-                    app:cardCornerRadius="15dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginHorizontal="10dp"
-                            android:layout_marginVertical="25dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="330dp"
-                                android:layout_height="wrap_content"
-                                android:text="Những loại sách giáo dục mua nhiều nhất"
-                                android:textColor="@color/white"
-                                android:textSize="20dp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/arrow4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:backgroundTint="#F1EAEA"
-                                android:src="@drawable/ic_arrow_drop_up" />
-                        </LinearLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_BookTop_Home"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:visibility="gone" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_Top_Thieunhi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:backgroundTint="#E9EEF3"
-
-                    app:cardCornerRadius="15dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_marginVertical="25dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:layout_width="330dp"
-                                android:layout_height="wrap_content"
-                                android:text="Những loại sách Thiếu nhi bán chạy nhất"
-                                android:textColor="@color/black"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/arrow5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:backgroundTint="#F1EAEA"
-                                android:src="@drawable/ic_arrow_drop_up"
-                                android:visibility="gone" />
-                        </LinearLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_ThieunhiTop_Home"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:visibility="gone" />
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_Top_Hoiky"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:backgroundTint="#E9EEF3"
-
-                    app:cardCornerRadius="15dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_marginVertical="25dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:layout_width="330dp"
-                                android:layout_height="wrap_content"
-                                android:text="Những loại sách Hồi ký bán chạy nhất"
-                                android:textColor="@color/black"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/arrow6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:backgroundTint="#F1EAEA"
-                                android:src="@drawable/ic_arrow_drop_up"
-                                android:visibility="gone" />
-                        </LinearLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_HoikyTop_Home"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:visibility="gone" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_Top_Giaokhoa"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:backgroundTint="#E9EEF3"
-
-                    app:cardCornerRadius="15dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_marginVertical="25dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:layout_width="330dp"
-                                android:layout_height="wrap_content"
-                                android:text="Những loại sách Giáo khoa bán chạy nhất"
-                                android:textColor="@color/black"
-                                android:textSize="20sp"
-                                android:textStyle="bold" />
-
-                            <ImageView
-                                android:id="@+id/arrow7"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:backgroundTint="#F1EAEA"
-                                android:src="@drawable/ic_arrow_drop_up"
-                                android:visibility="visible" />
-                        </LinearLayout>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_GiaokhoaTop_Home"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:visibility="gone" />
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_Top_Ngoaingu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:backgroundTint="#E9EEF3"
-
-                    app:cardCornerRadius="15dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_marginVertical="25dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:layout_width="330dp"
-                                android:layout_height="wrap_content"
-                                android:text="Những loại sách Ngoại ngữ bán chạy nhất"
-                                android:textColor="@color/black"
-                                android:textSize="20sp"
                                 android:textStyle="bold"
-                                android:visibility="gone"/>
+                                android:layout_marginStart="8dp"/>
 
-                            <ImageView
-                                android:id="@+id/arrow8"
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:backgroundTint="#F1EAEA"
-                                android:src="@drawable/ic_arrow_drop_up"
-                                android:visibility="gone" />
+                                android:text="Xem tất cả"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="14sp"
+                                android:padding="8dp"
+                                android:background="?attr/selectableItemBackground"/>
                         </LinearLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_NgoainguTop_Home"
+                            android:id="@+id/rv_NewBook_Home"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:visibility="gone" />
+                            android:layout_height="wrap_content"
+                            android:clipToPadding="false"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
+                            android:paddingBottom="16dp"
+                            android:visibility="visible" />
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
