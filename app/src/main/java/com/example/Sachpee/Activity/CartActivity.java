@@ -43,7 +43,7 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-//TODO Check this later next cartadapter
+
 public class CartActivity extends AppCompatActivity implements OnCartUpdateListener {
 
     public static final String TAG = "CartActivity";
@@ -298,7 +298,6 @@ public class CartActivity extends AppCompatActivity implements OnCartUpdateListe
 
     public void deleteCart() {
         ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
-
         for (Cart cart : list) {
             Call<Void> call = apiService.deleteCartItem(cart.getIdCart());
             call.enqueue(new Callback<Void>() {

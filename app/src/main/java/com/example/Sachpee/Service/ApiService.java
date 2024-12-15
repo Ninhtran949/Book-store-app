@@ -26,7 +26,7 @@ import retrofit2.http.Query;
 public interface ApiService {
     @GET("/user/phone/{phoneNumber}")
     Call<User> getUserByPhoneNumber(@Path("phoneNumber") String phoneNumber);
-    @POST("/users/signup")
+    @POST("/user/signup")
     Call<Void> signUpUser(@Body User user);
 
     // Phương thức để lấy thông tin đối tác bằng idPartner
@@ -43,6 +43,7 @@ public interface ApiService {
     Call<Void> addBill(@Body Bill bill);
 
     @DELETE("cart/{idCart}")
+
     Call<Void> deleteCartItem(@Path("idCart") int idCart);
 
     @GET("/bills/")

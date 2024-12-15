@@ -233,9 +233,8 @@ public class HomePageFragment extends Fragment {
         handler.postDelayed(runnable, delayMillis); // Tiếp tục tự động chuyển đổi khi quay lại fragment
     }
     public void getTopProduct() {
-        // Giả định bạn có ApiService và phương thức getTopProducts() trả về danh sách ProductTop
+        // phương thức getTopProducts() trả về danh sách ProductTop
         ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
-
         Call<List<ProductTop>> call = apiService.getProductTop();
         call.enqueue(new Callback<List<ProductTop>>() {
             @Override
@@ -320,7 +319,7 @@ public class HomePageFragment extends Fragment {
                         listProduct.add(top);
                     }
 
-                    // Sắp xếp danh sách top sản phẩm nếu SDK >= Android N
+                    // Sắp xếp danh sách top sản phẩm theo amount theo thu tu giam dan nếu SDK >= Android N
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         Collections.sort(productToplistVanhoc, Comparator.comparing(ProductTop::getAmountProduct).reversed());
                         Collections.sort(productToplistKinhte, Comparator.comparing(ProductTop::getAmountProduct).reversed());

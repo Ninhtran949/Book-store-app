@@ -6,7 +6,7 @@ import android.webkit.WebView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.Sachpee.R;
-
+//wwebviewmap
 public class WebViewActivity extends AppCompatActivity {
 
     private WebView webView;
