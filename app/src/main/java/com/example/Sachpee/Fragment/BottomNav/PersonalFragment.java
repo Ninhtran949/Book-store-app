@@ -52,6 +52,7 @@ public class PersonalFragment extends Fragment {
     List<User> listUser = new ArrayList<>();
     ProfileViewModel profileViewModel;
     CardView itemPerson;
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -171,7 +172,7 @@ public class PersonalFragment extends Fragment {
         Log.d(TAG, "Refresh token: " + refreshToken);
 
         // Gọi API đăng xuất
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
         Map<String, String> requestBody = new HashMap<>();
         requestBody.put("refreshToken", refreshToken);
         Call<ResponseBody> call = apiService.logoutUser(requestBody);

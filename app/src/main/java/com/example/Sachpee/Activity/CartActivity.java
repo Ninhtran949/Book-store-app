@@ -133,7 +133,7 @@ public class CartActivity extends AppCompatActivity implements OnCartUpdateListe
 
         Log.d(TAG, "getCartProduct: Starting to retrieve cart products for user: " + user);
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         Call<List<Cart>> call = apiService.getCartProduct(user);
 
         call.enqueue(new Callback<List<Cart>>() {
@@ -257,7 +257,7 @@ public class CartActivity extends AppCompatActivity implements OnCartUpdateListe
         Log.d(TAG, "addBill: JSON Payload: " + jsonPayload);
 
         // Khởi tạo Retrofit và gọi API
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         Call<Void> call = apiService.addBill(bill);
 
         call.enqueue(new Callback<Void>() {
@@ -297,7 +297,7 @@ public class CartActivity extends AppCompatActivity implements OnCartUpdateListe
 
 
     public void deleteCart() {
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         for (Cart cart : list) {
             Call<Void> call = apiService.deleteCartItem(cart.getIdCart());
             call.enqueue(new Callback<Void>() {
@@ -326,7 +326,7 @@ public class CartActivity extends AppCompatActivity implements OnCartUpdateListe
         Log.d(TAG, "getAllBill: Starting to retrieve all bills via API.");
 
         // Khởi tạo API service
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
 
         // Gọi API để lấy danh sách Bill
         Call<List<Bill>> call = apiService.getAllBills();
@@ -365,7 +365,7 @@ public class CartActivity extends AppCompatActivity implements OnCartUpdateListe
     }
 
     public void getProductTop() {
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         Call<List<ProductTop>> call = apiService.getProductTop();
 
         Log.d(TAG, "getProductTop: Starting to retrieve product tops via API.");
@@ -434,7 +434,7 @@ public class CartActivity extends AppCompatActivity implements OnCartUpdateListe
 
     // ADDPRODUCTTOP CREATE
     private void createProductTop(ProductTop top) {
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         Call<Void> call = apiService.createProductTop(top);
         call.enqueue(new Callback<Void>() {
             @Override
@@ -456,7 +456,7 @@ public class CartActivity extends AppCompatActivity implements OnCartUpdateListe
     // ADDPRODUCTTOP UPDATE
     private void updateProductTop(ProductTop top) {
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         int id = top.getIdProduct();
         Call<Void> call = apiService.updateProductTop(id, top);   // Gửi toàn bộ đối tượng ProductTop
         call.enqueue(new Callback<Void>() {

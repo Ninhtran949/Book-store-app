@@ -61,6 +61,7 @@ public class StatisticalFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private StatisticalAdapter adapterStatistical;
     private List<Bill> listBill = new ArrayList<>();
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,7 +93,7 @@ public class StatisticalFragment extends Fragment {
         String user = preferences.getString("username", "");
 
         // Tạo instance của ApiService
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         // Gọi API để lấy danh sách bill
         Call<List<Bill>> call = apiService.getAllBills();
@@ -179,7 +180,7 @@ public class StatisticalFragment extends Fragment {
             } else if (todate.isEmpty()) {
                 Toast.makeText(getContext(), "Vui lòng chọn ngày kết thúc", Toast.LENGTH_SHORT).show();
             } else {
-                ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+                ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
                 Call<List<Bill>> call = apiService.getBillsByPartner(user);
 
                 call.enqueue(new Callback<List<Bill>>() {

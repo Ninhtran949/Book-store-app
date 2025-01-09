@@ -111,7 +111,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             progressDialog.show();
 
             // Gọi API kiểm tra người dùng đã tồn tại hay chưa
-            ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+            ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
             Call<User> callCheckUser = apiService.getUserByPhoneNumber(strPhoneNumber);
 
             callCheckUser.enqueue(new Callback<User>() {
@@ -160,7 +160,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void registerUser(User user, ProgressDialog progressDialog) {
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         Call<Void> callSignUp = apiService.signUpUser(user);
 
         Log.d("SignUp", "Request Data: " + new Gson().toJson(user)); // Log dữ liệu gửi đi

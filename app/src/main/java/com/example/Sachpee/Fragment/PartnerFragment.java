@@ -6,6 +6,7 @@ import static android.app.Activity.RESULT_OK;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -64,6 +65,7 @@ public class PartnerFragment extends Fragment {
     private String namePartner,addressPartner,userPartner,passwordPartner,rePasswordPartner,imgPartner;
     private FloatingActionButton btn_addPartner;
     private ImageView img_Partner,imgCamera,imgDevice;
+    private Context context;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -225,7 +227,7 @@ public class PartnerFragment extends Fragment {
         List<Partner> list1 = new ArrayList<>();
 
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
         Call<List<Partner>> call = apiService.getAllPartners(); // Giả định rằng API trả về tất cả Partner
 
         call.enqueue(new Callback<List<Partner>>() {
@@ -264,7 +266,7 @@ public class PartnerFragment extends Fragment {
         List<User> list1 = new ArrayList<>();
 
         // Sử dụng Retrofit để gọi API
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
         Call<List<User>> call = apiService.getAllUsers(); //  API trả về danh sách User
 
         call.enqueue(new Callback<List<User>>() {
@@ -301,7 +303,7 @@ public class PartnerFragment extends Fragment {
         progressDialog.show(); // Hiển thị ProgressDialog
 
         // Sử dụng Retrofit để gọi API thêm đối tác
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         // Tạo ID cho đối tác mới
         if (listPartner.size() == 0) {

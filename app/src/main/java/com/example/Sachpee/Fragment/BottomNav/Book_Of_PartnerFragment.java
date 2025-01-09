@@ -37,6 +37,7 @@ public class Book_Of_PartnerFragment extends Fragment {
     private List<Product> listProduct = new ArrayList<>();
     private ProductAdapter adapter;
     private ProductFragment fragment= new ProductFragment();
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,7 +63,7 @@ public class Book_Of_PartnerFragment extends Fragment {
         Log.d("loadlistBook", "Partner: " + partner);
 
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         Call<List<Product>> call = apiService.getAllProducts();  // Giả định phương thức lấy tất cả sản phẩm
         call.enqueue(new Callback<List<Product>>() {

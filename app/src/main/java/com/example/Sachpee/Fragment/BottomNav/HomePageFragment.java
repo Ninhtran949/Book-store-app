@@ -40,7 +40,6 @@ import com.example.Sachpee.R;
 import com.example.Sachpee.Service.ApiClient;
 import com.example.Sachpee.Service.ApiService;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -224,7 +223,7 @@ public class HomePageFragment extends Fragment {
     }
     public void getTopProduct() {
         // phương thức getTopProducts() trả về danh sách ProductTop
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
         Call<List<ProductTop>> call = apiService.getProductTop();
         call.enqueue(new Callback<List<ProductTop>>() {
             @Override
@@ -287,7 +286,7 @@ public class HomePageFragment extends Fragment {
     public void getProduct() {
         mShimmerViewContainer.startShimmer();
         
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
         
         // Gọi API lấy tất cả sản phẩm
         Call<List<Product>> call = apiService.getAllProducts();

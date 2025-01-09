@@ -107,7 +107,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         progressBar.setVisibility(View.VISIBLE);
 
         // Gọi API đăng nhập
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         Map<String, String> loginData = new HashMap<>();
         loginData.put("username", phoneNumber);
         loginData.put("password", passwordUser);
@@ -214,7 +214,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         progressDialog.show();
 
         // Gọi API lấy danh sách đối tác (Partner)
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         Call<List<Partner>> call = apiService.getAllPartners(); // Gọi API từ server
         call.enqueue(new Callback<List<Partner>>() {
             @Override

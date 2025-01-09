@@ -29,7 +29,7 @@ import com.example.Sachpee.R;
 import com.example.Sachpee.Service.ApiClient;
 import com.example.Sachpee.Service.ApiService;
 import com.example.Sachpee.databinding.FragmentBillBinding;
-  
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +45,7 @@ public class CurrentOrderFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private AdapterBill adapterBill;
     private List<Bill> listBill = new ArrayList<>();
+    private Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +60,7 @@ public class CurrentOrderFragment extends Fragment {
         rvBill = view.findViewById(R.id.rv_billCurrent);
         linearLayoutManager = new LinearLayoutManager(getContext());
         rvBill.setLayoutManager(linearLayoutManager);
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
         adapterBill = new AdapterBill(listBill,getContext(),apiService);
         rvBill.setAdapter(adapterBill);
     }
@@ -69,7 +70,7 @@ public class CurrentOrderFragment extends Fragment {
         String user = preferences.getString("username", "");
 
         // Tạo instance của ApiService
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         // Gọi API để lấy danh sách bill
         Call<List<Bill>> call = apiService.getAllBills();

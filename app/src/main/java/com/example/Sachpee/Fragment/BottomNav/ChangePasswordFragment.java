@@ -7,6 +7,7 @@ import static com.example.Sachpee.constant.Profile.PASSWORD_INVALID_3;
 import static com.example.Sachpee.constant.Profile.PASSWORD_NOT_MATCH;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +48,7 @@ public class ChangePasswordFragment extends Fragment {
     private Partner mPartner;
     private User mUser;
     private ProfileViewModel mProfileFragment;
+    private Context context;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -95,7 +97,7 @@ public class ChangePasswordFragment extends Fragment {
                 Log.d(TAG, "changePass: change password");
 
                 // Tạo đối tượng ApiService và gọi API để cập nhật mật khẩu đối tác
-                ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+                ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
                 Call<Void> call = apiService.updatePartnerPassword(mPartner.getIdPartner(), mPartner);
 
                 // Thực hiện gọi API
@@ -170,7 +172,7 @@ public class ChangePasswordFragment extends Fragment {
                 Log.d(TAG, "changePass: change password");
 
                 // Sử dụng Retrofit để cập nhật mật khẩu mới
-                ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+                ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
                 Call<Void> call = apiService.updateUserPassword(mUser.getId(), mUser);
 
                 // Thực hiện gọi API
