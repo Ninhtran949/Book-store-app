@@ -411,18 +411,28 @@ public class HomePageFragment extends Fragment {
     }
 
     private void setupRecyclerViews() {
-        // Setup trending RecyclerView
-        LinearLayoutManager trendingManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        // Setup trending RecyclerView với GridLayoutManager
+        GridLayoutManager trendingManager = new GridLayoutManager(getContext(), 2); // 2 cột
         rv_trending_home.setLayoutManager(trendingManager);
         rv_trending_home.setHasFixedSize(true);
         rv_trending_home.setItemAnimator(new DefaultItemAnimator());
         
-        // Thêm decoration
+        // Thêm decoration cho khoảng cách giữa các item
         rv_trending_home.addItemDecoration(new ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, 
                                      @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                outRect.right = getResources().getDimensionPixelSize(R.dimen.item_horizontal_spacing);
+                int spacing = getResources().getDimensionPixelSize(R.dimen.item_horizontal_spacing);
+                int position = parent.getChildAdapterPosition(view);
+                
+                outRect.left = spacing;
+                outRect.right = spacing;
+                outRect.bottom = spacing;
+                
+                // Thêm top margin cho hàng đầu tiên
+                if (position < 2) {
+                    outRect.top = spacing;
+                }
             }
         });
 
@@ -430,18 +440,28 @@ public class HomePageFragment extends Fragment {
         adapter = new ProductAdapter(listVanhoc, new ProductFragment(), getContext());
         rv_trending_home.setAdapter(adapter);
 
-        // Setup new books RecyclerView
-        LinearLayoutManager newBooksManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        // Setup new books RecyclerView cũng với GridLayoutManager
+        GridLayoutManager newBooksManager = new GridLayoutManager(getContext(), 2); // 2 cột
         rv_NewBook_Home.setLayoutManager(newBooksManager);
         rv_NewBook_Home.setHasFixedSize(true);
         rv_NewBook_Home.setItemAnimator(new DefaultItemAnimator());
         
-        // Thêm decoration cho new books
+        // Thêm decoration tương tự cho new books
         rv_NewBook_Home.addItemDecoration(new ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, 
                                      @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                outRect.right = getResources().getDimensionPixelSize(R.dimen.item_horizontal_spacing);
+                int spacing = getResources().getDimensionPixelSize(R.dimen.item_horizontal_spacing);
+                int position = parent.getChildAdapterPosition(view);
+                
+                outRect.left = spacing;
+                outRect.right = spacing;
+                outRect.bottom = spacing;
+                
+                // Thêm top margin cho hàng đầu tiên
+                if (position < 2) {
+                    outRect.top = spacing;
+                }
             }
         });
 

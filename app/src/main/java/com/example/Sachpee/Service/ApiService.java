@@ -13,6 +13,7 @@ import com.example.Sachpee.Model.User;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -26,8 +27,15 @@ import retrofit2.http.Query;
 public interface ApiService {
     @GET("/user/phone/{phoneNumber}")
     Call<User> getUserByPhoneNumber(@Path("phoneNumber") String phoneNumber);
+
     @POST("/user/signup")
     Call<Void> signUpUser(@Body User user);
+
+    @POST("/user/login")
+    Call<ResponseBody> loginUser(@Body Map<String, String> loginData);
+
+    @POST("/user/logout")
+    Call<ResponseBody> logoutUser(@Body Map<String, String> requestBody);
 
     // Phương thức để lấy thông tin đối tác bằng idPartner
     @GET("/partners/{idPartner}")
@@ -127,4 +135,3 @@ public interface ApiService {
     @GET("/zalopay/check-status-order/{idBill}")
     Call<StatusResponse> checkOrderStatus(@Path("idBill") int idBill);
 }
-

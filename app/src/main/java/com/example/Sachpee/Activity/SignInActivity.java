@@ -25,10 +25,14 @@ import com.example.Sachpee.Service.ApiService;
 import com.example.Sachpee.constant.Profile;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,7 +63,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         btnSignIn.setOnClickListener(this::onClick);
     }
 
-
     private void initUI() {
         layoutSignUp = findViewById(R.id.layout_SignInActivity_signIn);
         btnSignIn = findViewById(R.id.btn_SignInActivity_signIn);
@@ -81,10 +84,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.btn_SignInActivity_signIn:
-                if (!logins()){
-                    userLogin();
-                }
-                logins();
+                userLogin();
                 break;
             default:
                 Toast.makeText(this, "Chức năng đang phát triển", Toast.LENGTH_SHORT).show();
@@ -106,88 +106,80 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // Hiển thị thanh tiến trình
         progressBar.setVisibility(View.VISIBLE);
 
-        // Gọi API lấy thông tin người dùng
+        // Gọi API đăng nhập
         ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
-        Call<User> call = apiService.getUserByPhoneNumber(phoneNumber); // Gọi API lấy thông tin người dùng
-        call.enqueue(new Callback<User>() {
+        Map<String, String> loginData = new HashMap<>();
+        loginData.put("username", phoneNumber);
+        loginData.put("password", passwordUser);
+        Call<ResponseBody> call = apiService.loginUser(loginData);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 // Ẩn thanh tiến trình
                 progressBar.setVisibility(View.INVISIBLE);
 
                 if (response.isSuccessful() && response.body() != null) {
-                    // Lấy mật khẩu từ đối tượng User trả về
-                    User user = response.body();
-                    String password = user.getPassword();
+                    try {
+                        // Parse JSON response
+                        String responseBody = response.body().string();
+                        JSONObject jsonObject = new JSONObject(responseBody);
+                        String accessToken = jsonObject.getString("accessToken");
+                        String refreshToken = jsonObject.getString("refreshToken");
+                        JSONObject userObject = jsonObject.getJSONObject("user");
+                        String userId = userObject.getString("id");
+                        String userName = userObject.getString("name");
+                        String userPhoneNumber = userObject.getString("phoneNumber");
 
-                    // So sánh mật khẩu
-                    if (password.equals(passwordUser)) {
-                        // Đăng nhập thành công
-                        remember("user", phoneNumber);
+                        // Lưu thông tin người dùng và token
+                        remember("user", userId, accessToken, refreshToken);
+
+                        // Chuyển đến MainActivity
                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                         startActivity(intent);
                         finishAffinity();
-                    } else {
-                        // Thông báo mật khẩu không đúng
-                        formPassword.setError("Mật khẩu không đúng");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(SignInActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    // Thông báo tài khoản không tồn tại
-                    formEmail.setError("Tài khoản không tồn tại");
+                    // Thông báo lỗi đăng nhập
+                    Toast.makeText(SignInActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 // Xử lý khi có lỗi xảy ra
                 progressBar.setVisibility(View.INVISIBLE);
                 Log.e(TAG, "onFailure: " + t.getMessage());
+                Toast.makeText(SignInActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public boolean logins(){
-        //TODO validate partner login
+    public void remember(String role, String id, String accessToken, String refreshToken) {
         String email = formEmail.getEditText().getText().toString().trim();
         String password = formPassword.getEditText().getText().toString().trim();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getUserPartner().equals(email) && list.get(i).getPasswordPartner().equals(password)){
-                remember("partner", String.valueOf(list.get(i).getIdPartner()));
-                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                startActivity(intent);
-                finishAffinity();
-                return true;
-            }
-        }
-        if (email.equals("admin") && password.equals("admin") ){
-            remember("admin", "admin");
-            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-            startActivity(intent);
-            finishAffinity();
-            return true;
-        }
-        return false;
-    }
-
-    public void remember(String role, String id){
-        String email = formEmail.getEditText().getText().toString().trim();
-        String password = formPassword.getEditText().getText().toString().trim();
-        SharedPreferences sharedPreferences = getSharedPreferences("My_User",MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("My_User", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("username", email);
         editor.putString("password", password);
         editor.putString("role", role);
         editor.putString("id", id);
+        editor.putString("accessToken", accessToken);
+        editor.putString("refreshToken", refreshToken);
         editor.putBoolean("remember", mChkRemember.isChecked());
         editor.apply();
+        Log.d("SignInActivity", "Access Token: " + accessToken);
+        Log.d("SignInActivity", "Refresh Token: " + refreshToken);
     }
 
-    public void getDataSpf(){
-        SharedPreferences sharedPreferences = getSharedPreferences("My_User",MODE_PRIVATE);
-        boolean isRemember = sharedPreferences.getBoolean("remember",false);
+    public void getDataSpf() {
+        SharedPreferences sharedPreferences = getSharedPreferences("My_User", MODE_PRIVATE);
+        boolean isRemember = sharedPreferences.getBoolean("remember", false);
         if (isRemember) {
-            formEmail.getEditText().setText(sharedPreferences.getString("username",""));
-            formPassword.getEditText().setText(sharedPreferences.getString("password",""));
+            formEmail.getEditText().setText(sharedPreferences.getString("username", ""));
+            formPassword.getEditText().setText(sharedPreferences.getString("password", ""));
         }
     }
 
@@ -212,8 +204,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             return false;
         }
         return true;
-
     }
+
     public List<Partner> getAllPartner() {
         ProgressDialog progressDialog = new ProgressDialog(this);
         List<Partner> list1 = new ArrayList<>(); // Danh sách đối tác sẽ được lưu ở đây
@@ -256,8 +248,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // Trả về danh sách list1 (mặc dù sẽ được cập nhật không đồng bộ sau khi API phản hồi)
         return list1;
     }
-
-
 
     @Override
     protected void onStop() {

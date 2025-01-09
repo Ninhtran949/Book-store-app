@@ -109,8 +109,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/card_vanhoc_home"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginHorizontal="5dp"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="5dp">
@@ -123,7 +123,7 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="45dp"
                                 android:padding="8dp"
                                 android:background="@drawable/van_hoc_icon" />
 
@@ -132,14 +132,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/van_hoc_text"
                                 android:textAlignment="center"
-                                android:textSize="12sp" />
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/card_kinhte_home"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginHorizontal="5dp"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="5dp">
@@ -152,7 +152,7 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="45dp"
                                 android:padding="8dp"
                                 android:background="@drawable/kinh_te_icon" />
 
@@ -161,14 +161,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/kinh_t"
                                 android:textAlignment="center"
-                                android:textSize="12sp" />
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/card_tamly_home"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginHorizontal="5dp"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="5dp">
@@ -181,7 +181,7 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="45dp"
                                 android:padding="8dp"
                                 android:background="@drawable/tam_ly_icon" />
 
@@ -190,14 +190,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/tam_ly_ky_nang_song_text"
                                 android:textAlignment="center"
-                                android:textSize="12sp" />
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/card_giaoduc_home"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginHorizontal="5dp"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="5dp">
@@ -210,7 +210,7 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="45dp"
                                 android:padding="8dp"
                                 android:background="@drawable/giao_duc_icon" />
 
@@ -219,14 +219,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/nuoi_day_con"
                                 android:textAlignment="center"
-                                android:textSize="12sp" />
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/card_thieunhi_home"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginHorizontal="5dp"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="5dp">
@@ -239,7 +239,7 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="45dp"
                                 android:padding="8dp"
                                 android:background="@drawable/thieu_nhi" />
 
@@ -248,14 +248,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="Thiếu nhi"
                                 android:textAlignment="center"
-                                android:textSize="12sp" />
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/card_hoiky_home"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginHorizontal="5dp"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="5dp">
@@ -268,7 +268,7 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="45dp"
                                 android:padding="8dp"   
                                 android:background="@drawable/tieu_su_hoi_ky" />
 
@@ -277,14 +277,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="Hồi ký"
                                 android:textAlignment="center"
-                                android:textSize="12sp" />
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/card_giaokhoa_home"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginHorizontal="5dp"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="5dp">
@@ -297,7 +297,7 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="45dp"
                                 android:padding="8dp"
                                 android:background="@drawable/giao_khoa" />
 
@@ -306,14 +306,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="Giáo khoa"
                                 android:textAlignment="center"
-                                android:textSize="12sp" />
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/card_ngoaingu_home"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_marginHorizontal="5dp"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="5dp">
@@ -326,7 +326,7 @@
 
                             <ImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="60dp"
+                                android:layout_height="45dp"
                                 android:padding="8dp"
                                 android:background="@drawable/ngoai_ngu" />
 
@@ -335,7 +335,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Ngoại ngữ"
                                 android:textAlignment="center"
-                                android:textSize="12sp" />
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 

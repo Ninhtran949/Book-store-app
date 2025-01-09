@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity{
         // Khởi tạo Socket.io client
         try {
             // Địa chỉ IP hoặc tên miền thực tế của server
-            mSocket = IO.socket("http://192.168.0.2:8080"); // Ví dụ: sử dụng địa chỉ IP cục bộ
+            mSocket = IO.socket("http://192.168.0.4:8080"); // Ví dụ: sử dụng địa chỉ IP cục bộ
             mSocket.connect();
         } catch (Exception e) {
             e.printStackTrace();

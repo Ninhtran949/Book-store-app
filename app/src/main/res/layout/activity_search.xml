@@ -16,7 +16,7 @@
         android:background="@drawable/radius_dialog"
         app:defaultQueryHint="Tìm kiếm san phẩm"
         app:iconifiedByDefault="false"
-        />rvSearchrvS
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearch"
         android:layout_width="match_parent"
