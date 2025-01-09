@@ -118,7 +118,7 @@ router.post('/logout', async (req, res) => {
 
 // Tạo access token mới từ refresh token
 router.post('/token', async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
+    const { refreshToken } = req.body;
     if (!refreshToken) return res.status(401).json({ message: 'Refresh token is required' });
 
     try {
@@ -157,6 +157,28 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+// Thay đổi mật khẩu người dùng
+router.patch('/change-password/:id', async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    const userId = req.params.id;
+
+    try {
+        const user = await User.findOne({id:userId});
+        if (!user) return res.status(404).json({ message: 'User not found' });
+
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) return res.status(400).json({ message: 'Old password is incorrect' });
+
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedNewPassword;
+        await user.save();
+
+        res.json({ message: 'Password changed successfully' });
+    } catch (error) {
+        console.error('Error changing password:', error);
+        res.status(500).json({ message: error.message });
+    }
+});
 
 // UPDATE a User by ID
 router.patch('/id/:id', async (req, res) => {

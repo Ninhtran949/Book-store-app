@@ -120,6 +120,9 @@ public interface ApiService {
     @PATCH("/user/id/{id}")
     Call<Void> updateUserPassword(@Path("id") String id, @Body User user);
 
+    @PATCH("/user/change-password/{id}")
+    Call<Void> changeUserPassword(@Path("id") String userId, @Body Map<String, String> requestBody);
+
     @GET("/bills/range")
     Call<List<Bill>> getBillsInRange(@Query("user") String user, @Query("startDate") String startDate, @Query("endDate") String endDate);
 
