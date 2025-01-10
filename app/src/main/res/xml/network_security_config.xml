@@ -3,11 +3,11 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">ws://192.168.0.109:8080</domain>
         <domain includeSubdomains="true">10.0.2.2</domain>
-        <domain includeSubdomains="true">192.168.0.6</domain>
+        <domain includeSubdomains="true">192.168.15.11</domain>
         <domain includeSubdomains="true">http://192.168.0.109:8080</domain>
         <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">192.168.0.4</domain>
-        <domain includeSubdomains="true">http://192.168.0.6</domain>
+        <domain includeSubdomains="true">http://192.168.15.11</domain>
         
 
     </domain-config>
