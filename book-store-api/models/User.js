@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const CryptoJS = require('crypto-js');
 
-const secretKey = 'secrasetdkasd-secret-key'; // khóa bí mật 
+const secretKey = process.env.ENCRYPTION_SECRET_KEY; // khóa bí mật từ biến môi trường
 
 // Define User schema
 const userSchema = new mongoose.Schema({

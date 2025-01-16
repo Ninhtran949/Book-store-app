@@ -75,7 +75,7 @@ public class AuthInterceptor implements Interceptor {
             OkHttpClient client = new OkHttpClient();
             RequestBody body = RequestBody.create(MediaType.parse("application/json"), new JSONObject().put("refreshToken", refreshToken).toString());
             Request request = new Request.Builder()
-                    .url("http://192.168.15.11:8080/token") // URL endpoint để làm mới token
+                    .url("http://192.168.28.217:8080/token") // URL endpoint để làm mới token
                     .post(body)
                     .build();
 
