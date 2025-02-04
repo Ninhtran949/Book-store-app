@@ -28,7 +28,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 
@@ -108,59 +110,41 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             ProgressDialog progressDialog = Utils.createProgressDiaglog(SignUpActivity.this);
             progressDialog.show();
 
-            // Gọi API kiểm tra người dùng đã tồn tại hay chưa và thực hiện đăng ký
-            ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+            // Gọi API kiểm tra người dùng đã tồn tại hay chưa
+            ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
             Call<User> callCheckUser = apiService.getUserByPhoneNumber(strPhoneNumber);
 
             callCheckUser.enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful() && response.body() == null) {
-                        // Nếu người dùng chưa tồn tại, thực hiện đăng ký
-                        Call<Void> callSignUp = apiService.signUpUser(user);
-                        callSignUp.enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                progressDialog.dismiss();
-                                if (response.isSuccessful()) {
-                                    // Đăng ký thành công, thông báo và chuyển sang MainActivity
-                                    Toast.makeText(SignUpActivity.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
-                                    remember(strPhoneNumber, strPassword, "user", strPhoneNumber);
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                    finishAffinity();
-                                } else {
-                                    Toast.makeText(SignUpActivity.this, "Tạo tài khoản thất bại", Toast.LENGTH_LONG).show();
-                                }
-                            }
+                    progressDialog.dismiss();
 
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
-                                progressDialog.dismiss();
-                                Toast.makeText(SignUpActivity.this, "Có lỗi khi tạo tài khoản", Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    } else {
-                        // Nếu người dùng đã tồn tại, hiển thị lỗi
-                        progressDialog.dismiss();
+                    if (response.isSuccessful() && response.body() != null) {
+                        // Người dùng đã tồn tại
                         mFormPhoneNumber.setError("Số điện thoại đã tồn tại");
+                    } else if (response.code() == 404) {
+                        // Người dùng không tồn tại, thực hiện đăng ký
+                        registerUser(user, progressDialog);
+                    } else {
+                        // Lỗi khác
+                        Toast.makeText(SignUpActivity.this, "Có lỗi xảy ra: " + response.message(), Toast.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
                     progressDialog.dismiss();
-                    Toast.makeText(SignUpActivity.this, "Có lỗi khi kiểm tra tài khoản", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpActivity.this, "Không thể kết nối đến server", Toast.LENGTH_LONG).show();
                 }
             });
+
         } catch (NullPointerException e) {
-            // Bắt lỗi nếu các trường nhập liệu để trống
             if (e.getMessage().equals(FIELDS_EMPTY)) {
                 setErrorEmpty();
             } else {
                 Log.e(TAG, "signUp: ", e);
             }
         } catch (IllegalArgumentException e) {
-            // Bắt lỗi các trường không hợp lệ
             if (e.getMessage().equals(NUMBER_PHONE_INVALID)) {
                 mFormPhoneNumber.setError("Số điện thoại không hợp lệ");
             } else if (e.getMessage().equals(PASSWORD_INVALID)) {
@@ -171,10 +155,46 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 Log.e(TAG, "signUp: ", e);
             }
         } catch (Exception e) {
-            // Bắt các ngoại lệ khác chưa được xử lý
             Log.e(TAG, "signUp: ", e);
         }
     }
+
+    private void registerUser(User user, ProgressDialog progressDialog) {
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
+        Call<Void> callSignUp = apiService.signUpUser(user);
+
+        Log.d("SignUp", "Request Data: " + new Gson().toJson(user)); // Log dữ liệu gửi đi
+
+        callSignUp.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                progressDialog.dismiss();
+                if (response.isSuccessful()) {
+                    Log.d("SignUp", "Response: Success");
+                    Toast.makeText(SignUpActivity.this, "Tạo tài khoản thành công", Toast.LENGTH_SHORT).show();
+                    remember(user.getPhoneNumber(), user.getPassword(), "user", user.getPhoneNumber());
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finishAffinity();
+                } else {
+                    try {
+                        Log.e("`SignUp`", "Response Error: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        Log.e("SignUp", "Error parsing errorBody", e);
+                    }
+                    Toast.makeText(SignUpActivity.this, "Tạo tài khoản thất bại", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                progressDialog.dismiss();
+                Log.e("SignUp", "Failure: " + t.getMessage(), t);
+                Toast.makeText(SignUpActivity.this, "Có lỗi khi tạo tài khoản", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
 
 
     private void setErrorEmpty() {

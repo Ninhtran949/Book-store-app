@@ -4,14 +4,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration;
 
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,13 +32,13 @@ import com.example.Sachpee.Fragment.ProductFragments.TamlyFragment;
 import com.example.Sachpee.Fragment.ProductFragments.ProductFragment;
 import com.example.Sachpee.Fragment.ProductFragments.ThieunhiFragment;
 import com.example.Sachpee.Fragment.ProductFragments.VanhocFragment;
+
 import com.example.Sachpee.Model.ImageSlider;
 import com.example.Sachpee.Model.Product;
 import com.example.Sachpee.Model.ProductTop;
 import com.example.Sachpee.R;
 import com.example.Sachpee.Service.ApiClient;
 import com.example.Sachpee.Service.ApiService;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,6 +50,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 public class HomePageFragment extends Fragment {
 
@@ -67,16 +72,9 @@ public class HomePageFragment extends Fragment {
     private List<Product> listGiaokhoa= new ArrayList<>();
     private List<Product> listNgoaingu= new ArrayList<>();
 
-    ProductAdapter adapter;
-
     CardView card_vanhoc_home, card_kinhte_home, card_tamly_home, card_giaoduc_home, card_thieunhi_home, card_hoiky_home, card_giaokhoa_home, card_ngoaingu_home;
 
-    CardView card_trending_home, card_Top_Kinhte, card_Top_Tamly, card_Top_Book, card_Top_Thieunhi, card_Top_Hoiky, card_Top_Giaokhoa, card_Top_Ngoaingu;
-
-    RecyclerView rv_trending_home, rv_KinhteTop_Home, rv_TamlyTop_Home, rv_BookTop_Home, rv_ThieunhiTop_Home, rv_HoikyTop_Home, rv_GiaokhoaTop_Home, rv_NgoainguTop_Home;
-
-    ImageView arrow1, arrow2, arrow3, arrow4, arrow5, arrow6, arrow7, arrow8;
-    private ProductFragment fragment = new ProductFragment();
+    RecyclerView rv_trending_home, rv_NewBook_Home;
 
     ///imgview
     private List<ImageSlider> list = new ArrayList<>();
@@ -88,47 +86,31 @@ public class HomePageFragment extends Fragment {
     private int currentPage = 0;
     private final int delayMillis = 5000; // Thay đổi sau mỗi 5 giây
 
+    private ShimmerFrameLayout mShimmerViewContainer;
+
+    private ProductAdapter adapter;
+    private ProductAdapter newBooksAdapter;
+    private List<Product> newBooksList = new ArrayList<>();
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handler = new Handler();
     }
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
-        //viewslider
+        
+        // Khởi tạo ShimmerFrameLayout
+        mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
+        
+        // Khởi tạo các view cho slider
         viewPager = view.findViewById(R.id.main_slider_image);
         circleIndicator = view.findViewById(R.id.circle_indicator);
 
-        list.add(new ImageSlider(R.drawable.banner06));
-        list.add(new ImageSlider(R.drawable.banner02));
-        list.add(new ImageSlider(R.drawable.banner08));
-        list.add(new ImageSlider(R.drawable.slide1));
-        list.add(new ImageSlider(R.drawable.slide2));
-        list.add(new ImageSlider(R.drawable.slide3));
-
-        imageSliderAdapter = new ImageSliderAdapter(getContext(), list);
-        viewPager.setAdapter(imageSliderAdapter);
-        circleIndicator.setViewPager(viewPager);
-
-        startAutoSlide();
-
-        adapter = new ProductAdapter(listVanhoc,fragment,getContext());
-        getTopProduct();
-        getProduct();
-
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-        arrow1 = view.findViewById(R.id.arrow1);
-        arrow2 = view.findViewById(R.id.arrow2);
-        arrow3 = view.findViewById(R.id.arrow3);
-        arrow4 = view.findViewById(R.id.arrow4);
-        arrow5 = view.findViewById(R.id.arrow5);
-        arrow6 = view.findViewById(R.id.arrow6);
-        arrow7 = view.findViewById(R.id.arrow7);
-        arrow8 = view.findViewById(R.id.arrow8);
-
+        // Khởi tạo các CardView cho navigation
         card_vanhoc_home = view.findViewById(R.id.card_vanhoc_home);
         card_kinhte_home = view.findViewById(R.id.card_kinhte_home);
         card_tamly_home = view.findViewById(R.id.card_tamly_home);
@@ -138,76 +120,83 @@ public class HomePageFragment extends Fragment {
         card_giaokhoa_home = view.findViewById(R.id.card_giaokhoa_home);
         card_ngoaingu_home = view.findViewById(R.id.card_ngoaingu_home);
 
-        card_trending_home = view.findViewById(R.id.card_trending_home);
-        card_Top_Kinhte = view.findViewById(R.id.card_Top_Kinhte);
-        card_Top_Tamly = view.findViewById(R.id.card_Top_Tamly);
-        card_Top_Book = view.findViewById(R.id.card_Top_Book);
-        card_Top_Thieunhi = view.findViewById(R.id.card_Top_Thieunhi);
-        card_Top_Hoiky = view.findViewById(R.id.card_Top_Hoiky);
-        card_Top_Giaokhoa = view.findViewById(R.id.card_Top_Giaokhoa);
-        card_Top_Ngoaingu = view.findViewById(R.id.card_Top_Ngoaingu);
-
+        // Khởi tạo RecyclerViews
         rv_trending_home = view.findViewById(R.id.rv_trending_home);
-        rv_KinhteTop_Home = view.findViewById(R.id.rv_KinhteTop_Home);
-        rv_TamlyTop_Home = view.findViewById(R.id.rv_TamlyTop_Home);
-        rv_BookTop_Home = view.findViewById(R.id.rv_BookTop_Home);
-        rv_ThieunhiTop_Home = view.findViewById(R.id.rv_ThieunhiTop_Home);
-        rv_HoikyTop_Home = view.findViewById(R.id.rv_HoikyTop_Home);
-        rv_GiaokhoaTop_Home = view.findViewById(R.id.rv_GiaokhoaTop_Home);
-        rv_NgoainguTop_Home = view.findViewById(R.id.rv_NgoainguTop_Home);
+        rv_NewBook_Home = view.findViewById(R.id.rv_NewBook_Home);
 
-        card_vanhoc_home.setOnClickListener(view1 -> {
-            fragmentManager.beginTransaction().replace(R.id.frame_Home, new VanhocFragment(),null).addToBackStack(null).commit();
-        });
-        card_kinhte_home.setOnClickListener(view1 -> {
-            fragmentManager.beginTransaction().replace(R.id.frame_Home, new KinhteFragment(),null).addToBackStack(null).commit();
-        });
-        card_tamly_home.setOnClickListener(view1 -> {
-            fragmentManager.beginTransaction().replace(R.id.frame_Home, new TamlyFragment(),null).addToBackStack(null).commit();
-        });
-        card_giaoduc_home.setOnClickListener(view1 -> {
-            fragmentManager.beginTransaction().replace(R.id.frame_Home, new PartnerBookFragment(),null).addToBackStack(null).commit();
-        });
-        card_thieunhi_home.setOnClickListener(view1 -> {
-            fragmentManager.beginTransaction().replace(R.id.frame_Home, new ThieunhiFragment(),null).addToBackStack(null).commit();
-        });
-        card_hoiky_home.setOnClickListener(view1 -> {
-            fragmentManager.beginTransaction().replace(R.id.frame_Home, new HoikyFragment(),null).addToBackStack(null).commit();
-        });
-        card_giaokhoa_home.setOnClickListener(view1 -> {
-            fragmentManager.beginTransaction().replace(R.id.frame_Home, new GiaokhoaFragment(),null).addToBackStack(null).commit();
-        });
-        card_ngoaingu_home.setOnClickListener(view1 -> {
-            fragmentManager.beginTransaction().replace(R.id.frame_Home, new NgoainguFragment(),null).addToBackStack(null).commit();
-        });
+        // Setup các thành phần khác
+        setupSlider();
+        setupRecyclerViews();
+        setupClickListeners(view);
 
-        card_trending_home.setOnClickListener(view1 -> {
-            onClickItemCart(listVanhoc,rv_trending_home);
-        });
-        card_Top_Kinhte.setOnClickListener(view1 -> {
-            onClickItemCart(listKinhte,rv_KinhteTop_Home);
-        });
-        card_Top_Tamly.setOnClickListener(view1 -> {
-            onClickItemCart(listTamly,rv_TamlyTop_Home);
-        });
-        card_Top_Book.setOnClickListener(view1 -> {
-            onClickItemCart(listBook,rv_BookTop_Home);
-        });
-        card_Top_Thieunhi.setOnClickListener(view1 -> {
-            onClickItemCart(listThieunhi,rv_ThieunhiTop_Home);
-        });
-        card_Top_Hoiky.setOnClickListener(view1 -> {
-            onClickItemCart(listHoiky,rv_HoikyTop_Home);
-        });
-        card_Top_Giaokhoa.setOnClickListener(view1 -> {
-            onClickItemCart(listGiaokhoa,rv_GiaokhoaTop_Home);
-        });
-        card_Top_Ngoaingu.setOnClickListener(view1 -> {
-            onClickItemCart(listNgoaingu,rv_NgoainguTop_Home);
-        });
+        // Thêm gọi API để lấy dữ liệu
+        getTopProduct();
+        getProduct();
 
         return view;
     }
+
+    private void setupClickListeners(View view) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+        // Setup click listeners cho các CardView
+        card_vanhoc_home.setOnClickListener(v -> 
+            fragmentManager.beginTransaction()
+                .replace(R.id.frame_Home, new VanhocFragment())
+                .addToBackStack(null)
+                .commit());
+
+        card_kinhte_home.setOnClickListener(v -> 
+            fragmentManager.beginTransaction()
+                .replace(R.id.frame_Home, new KinhteFragment())
+                .addToBackStack(null)
+                .commit());
+
+        card_tamly_home.setOnClickListener(v -> 
+            fragmentManager.beginTransaction()
+                .replace(R.id.frame_Home, new TamlyFragment())
+                .addToBackStack(null)
+                .commit());
+
+        card_giaoduc_home.setOnClickListener(v -> 
+            fragmentManager.beginTransaction()
+                .replace(R.id.frame_Home, new PartnerBookFragment())
+                .addToBackStack(null)
+                .commit());
+
+        card_thieunhi_home.setOnClickListener(v -> 
+            fragmentManager.beginTransaction()
+                .replace(R.id.frame_Home, new ThieunhiFragment())
+                .addToBackStack(null)
+                .commit());
+
+        card_hoiky_home.setOnClickListener(v -> 
+            fragmentManager.beginTransaction()
+                .replace(R.id.frame_Home, new HoikyFragment())
+                .addToBackStack(null)
+                .commit());
+
+        card_giaokhoa_home.setOnClickListener(v -> 
+            fragmentManager.beginTransaction()
+                .replace(R.id.frame_Home, new GiaokhoaFragment())
+                .addToBackStack(null)
+                .commit());
+
+        card_ngoaingu_home.setOnClickListener(v -> 
+            fragmentManager.beginTransaction()
+                .replace(R.id.frame_Home, new NgoainguFragment())
+                .addToBackStack(null)
+                .commit());
+
+        // Click listener cho nút "Xem tất cả"
+        View viewAllTrending = view.findViewById(R.id.tv_view_all_trending);
+        if (viewAllTrending != null) {
+            viewAllTrending.setOnClickListener(v -> {
+                // Xử lý chuyển sang màn hình xem tất cả
+            });
+        }
+    }
+
     private void startAutoSlide() {
         runnable = new Runnable() {
             @Override
@@ -233,9 +222,8 @@ public class HomePageFragment extends Fragment {
         handler.postDelayed(runnable, delayMillis); // Tiếp tục tự động chuyển đổi khi quay lại fragment
     }
     public void getTopProduct() {
-        // Giả định bạn có ApiService và phương thức getTopProducts() trả về danh sách ProductTop
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
-
+        // phương thức getTopProducts() trả về danh sách ProductTop
+        ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
         Call<List<ProductTop>> call = apiService.getProductTop();
         call.enqueue(new Callback<List<ProductTop>>() {
             @Override
@@ -275,7 +263,7 @@ public class HomePageFragment extends Fragment {
 
                     // Gọi hàm getProduct() sau khi hoàn tất việc lọc
                     getProduct();
-                    Log.d("getTopProduct", "Sản phẩm văn học: " + productToplistVanhoc.size() +
+                    Log.d("getTopProduct", "Số lượng sản phẩm văn học: " + productToplistVanhoc.size() +
                             ", Kinh tế: " + productToplistKinhte.size() +
                             ", Tâm lý: " + productToplistTamly.size() +
                             ", Đồ ăn: " + productToplistBook.size() +
@@ -296,14 +284,17 @@ public class HomePageFragment extends Fragment {
     }
 
     public void getProduct() {
-        //  phương thức getAllProducts() trả về danh sách Product
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
-
+        mShimmerViewContainer.startShimmer();
+        
+        ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
+        
+        // Gọi API lấy tất cả sản phẩm
         Call<List<Product>> call = apiService.getAllProducts();
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    // Xử lý dữ liệu hiện tại
                     // Xóa sạch các danh sách trước khi thêm mới
                     listTamly.clear();
                     listKinhte.clear();
@@ -313,14 +304,12 @@ public class HomePageFragment extends Fragment {
                     listHoiky.clear();
                     listGiaokhoa.clear();
                     listNgoaingu.clear();
-                    listProduct.clear();  // Làm sạch danh sách product
+                    listProduct.clear();
 
-                    // Lặp qua danh sách sản phẩm nhận được từ API
-                    for (Product top : response.body()) {
-                        listProduct.add(top);
-                    }
+                    // Thêm dữ liệu mới
+                    listProduct.addAll(response.body());
 
-                    // Sắp xếp danh sách top sản phẩm nếu SDK >= Android N
+                    // Sắp xếp và phân loại sản phẩm
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         Collections.sort(productToplistVanhoc, Comparator.comparing(ProductTop::getAmountProduct).reversed());
                         Collections.sort(productToplistKinhte, Comparator.comparing(ProductTop::getAmountProduct).reversed());
@@ -332,7 +321,7 @@ public class HomePageFragment extends Fragment {
                         Collections.sort(productToplistNgoaingu, Comparator.comparing(ProductTop::getAmountProduct).reversed());
                     }
 
-                    // Thêm các sản phẩm vào danh sách tương ứng
+                    // Thêm sản phẩm vào danh sách tương ứng
                     add(productToplistVanhoc, listProduct, listVanhoc);
                     add(productToplistKinhte, listProduct, listKinhte);
                     add(productToplistBook, listProduct, listBook);
@@ -342,7 +331,7 @@ public class HomePageFragment extends Fragment {
                     add(productToplistGiaokhoa, listProduct, listGiaokhoa);
                     add(productToplistNgoaingu, listProduct, listNgoaingu);
 
-                    // Thực hiện các xử lý bổ sung với các danh sách đã lọc
+                    // Xử lý trùng lặp
                     collections(listVanhoc);
                     collections(listKinhte);
                     collections(listBook);
@@ -352,18 +341,37 @@ public class HomePageFragment extends Fragment {
                     collections(listGiaokhoa);
                     collections(listNgoaingu);
 
-                    // Cập nhật adapter
+                    // Cập nhật adapter trending
                     adapter.notifyDataSetChanged();
 
-                    Log.d("getProduct", "Danh sách sản phẩm đã cập nhật.");
-                } else {
-                    Log.e("getProduct", "Phản hồi không thành công: " + response.code());
+                    // Lấy 10 sản phẩm mới nhất
+                    newBooksList.clear();
+                    List<Product> allProducts = response.body();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        // Sắp xếp theo mã sản phẩm giảm dần (giả sử mã lớn hơn = mới hơn)
+                        Collections.sort(allProducts, (p1, p2) -> 
+                            Integer.compare(p2.getCodeProduct(), p1.getCodeProduct()));
+                    }
+                    // Lấy 10 sản phẩm đầu tiên
+                    for (int i = 0; i < Math.min(10, allProducts.size()); i++) {
+                        newBooksList.add(allProducts.get(i));
+                    }
+                    // Cập nhật adapter sách mới
+                    newBooksAdapter.notifyDataSetChanged();
+
+                    // Ẩn shimmer và hiện RecyclerView
+                    mShimmerViewContainer.stopShimmer();
+                    mShimmerViewContainer.setVisibility(View.GONE);
+                    rv_trending_home.setVisibility(View.VISIBLE);
+                    rv_NewBook_Home.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onFailure(Call<List<Product>> call, Throwable t) {
                 Log.e("getProduct", "Lỗi khi gọi API: " + t.getMessage());
+                mShimmerViewContainer.stopShimmer();
+                mShimmerViewContainer.setVisibility(View.GONE);
             }
         });
     }
@@ -401,32 +409,78 @@ public class HomePageFragment extends Fragment {
 
     }
 
-    public void onClickItemCart(List<Product> list,RecyclerView recyclerView){
-        if (recyclerView.getVisibility() == View.GONE){
-            arrow1.setImageResource(R.drawable.ic_arrow_drop_down);
-            arrow2.setImageResource(R.drawable.ic_arrow_drop_down);
-            arrow3.setImageResource(R.drawable.ic_arrow_drop_down);
-            arrow4.setImageResource(R.drawable.ic_arrow_drop_down);
-            arrow5.setImageResource(R.drawable.ic_arrow_drop_down);
-            arrow6.setImageResource(R.drawable.ic_arrow_drop_down);
-            arrow7.setImageResource(R.drawable.ic_arrow_drop_down);
-            arrow8.setImageResource(R.drawable.ic_arrow_drop_down);
-            recyclerView.setVisibility(View.VISIBLE);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            adapter = new ProductAdapter(list,fragment,getContext());
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        }
-        else {
-            recyclerView.setVisibility(View.GONE);
-            arrow1.setImageResource(R.drawable.ic_arrow_drop_up);
-            arrow2.setImageResource(R.drawable.ic_arrow_drop_up);
-            arrow3.setImageResource(R.drawable.ic_arrow_drop_up);
-            arrow4.setImageResource(R.drawable.ic_arrow_drop_up);
-            arrow5.setImageResource(R.drawable.ic_arrow_drop_up);
-            arrow6.setImageResource(R.drawable.ic_arrow_drop_up);
-            arrow7.setImageResource(R.drawable.ic_arrow_drop_up);
-            arrow8.setImageResource(R.drawable.ic_arrow_drop_up);
-        }
+    private void setupRecyclerViews() {
+        // Setup trending RecyclerView với GridLayoutManager
+        GridLayoutManager trendingManager = new GridLayoutManager(getContext(), 2); // 2 cột
+        rv_trending_home.setLayoutManager(trendingManager);
+        rv_trending_home.setHasFixedSize(true);
+        rv_trending_home.setItemAnimator(new DefaultItemAnimator());
+        
+        // Thêm decoration cho khoảng cách giữa các item
+        rv_trending_home.addItemDecoration(new ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, 
+                                     @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                int spacing = getResources().getDimensionPixelSize(R.dimen.item_horizontal_spacing);
+                int position = parent.getChildAdapterPosition(view);
+                
+                outRect.left = spacing;
+                outRect.right = spacing;
+                outRect.bottom = spacing;
+                
+                // Thêm top margin cho hàng đầu tiên
+                if (position < 2) {
+                    outRect.top = spacing;
+                }
+            }
+        });
+
+        // Setup adapter cho trending
+        adapter = new ProductAdapter(listVanhoc, new ProductFragment(), getContext());
+        rv_trending_home.setAdapter(adapter);
+
+        // Setup new books RecyclerView cũng với GridLayoutManager
+        GridLayoutManager newBooksManager = new GridLayoutManager(getContext(), 2); // 2 cột
+        rv_NewBook_Home.setLayoutManager(newBooksManager);
+        rv_NewBook_Home.setHasFixedSize(true);
+        rv_NewBook_Home.setItemAnimator(new DefaultItemAnimator());
+        
+        // Thêm decoration tương tự cho new books
+        rv_NewBook_Home.addItemDecoration(new ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, 
+                                     @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                int spacing = getResources().getDimensionPixelSize(R.dimen.item_horizontal_spacing);
+                int position = parent.getChildAdapterPosition(view);
+                
+                outRect.left = spacing;
+                outRect.right = spacing;
+                outRect.bottom = spacing;
+                
+                // Thêm top margin cho hàng đầu tiên
+                if (position < 2) {
+                    outRect.top = spacing;
+                }
+            }
+        });
+
+        // Setup adapter cho new books
+        newBooksAdapter = new ProductAdapter(newBooksList, new ProductFragment(), getContext());
+        rv_NewBook_Home.setAdapter(newBooksAdapter);
+    }
+
+    private void setupSlider() {
+        list.add(new ImageSlider(R.drawable.banner06));
+        list.add(new ImageSlider(R.drawable.banner02));
+        list.add(new ImageSlider(R.drawable.banner08));
+        list.add(new ImageSlider(R.drawable.slide1));
+        list.add(new ImageSlider(R.drawable.slide2));
+        list.add(new ImageSlider(R.drawable.slide3));
+
+        imageSliderAdapter = new ImageSliderAdapter(getContext(), list);
+        viewPager.setAdapter(imageSliderAdapter);
+        circleIndicator.setViewPager(viewPager);
+
+        startAutoSlide();
     }
 }

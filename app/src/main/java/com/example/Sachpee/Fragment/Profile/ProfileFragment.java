@@ -3,6 +3,7 @@ package com.example.Sachpee.Fragment.Profile;
 import static com.example.Sachpee.Activity.MainActivity.MY_REQUEST_CODE;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -64,7 +65,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private TextInputLayout mLayoutName, mLayoutEmail, mLayoutAddress, mLayoutPhoneNumber;
     private Button btnUpdateInfoUser;
     private ImageView ivAvatar;
-
+    private Context context;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -237,7 +238,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         Map<String, Object> fields = partner.toMap();
 
         // Tạo instance của ApiService
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         // Gọi API PATCH để cập nhật thông tin Partner
         Call<Void> call = apiService.updatePartner(partner.getIdPartner(), fields);
@@ -312,7 +313,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         fields.put("avatar", imgUser); // Cập nhật hình ảnh
 
         // Tạo instance của ApiService
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         // Gọi API PATCH để cập nhật thông tin User
         Call<Void> call = apiService.updateUser(user.getId(), fields);

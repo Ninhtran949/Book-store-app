@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity{
         // Khởi tạo Socket.io client
         try {
             // Địa chỉ IP hoặc tên miền thực tế của server
-            mSocket = IO.socket("http://192.168.0.2:8080"); // Ví dụ: sử dụng địa chỉ IP cục bộ
+            mSocket = IO.socket("http://192.168.0.4:8080"); // Ví dụ: sử dụng địa chỉ IP cục bộ
             mSocket.connect();
         } catch (Exception e) {
             e.printStackTrace();
@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity{
         String user = preferences.getString("username", "");
 
         // Sử dụng Retrofit để lấy dữ liệu từ MongoDB
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         Call<List<Cart>> call = apiService.getCartsByUser(user);
         call.enqueue(new Callback<List<Cart>>() {
             @Override
@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity{
         List<Cart> list1 = new ArrayList<>();
 
         // Sử dụng Retrofit để lấy dữ liệu từ MongoDB
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         Call<List<Cart>> call = apiService.getCartsByUser(user);
         call.enqueue(new Callback<List<Cart>>() {
             @Override
@@ -382,7 +382,7 @@ public class MainActivity extends AppCompatActivity{
         Log.d(TAG, "loadUserInfoById: " + phoneNumber);
 
         // Khởi tạo Retrofit
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
 
         // Gọi API để lấy thông tin người dùng
         Call<User> call = apiService.getUserByPhoneNumber(phoneNumber);
@@ -412,7 +412,7 @@ public class MainActivity extends AppCompatActivity{
         partner = new Partner();
         Log.d(TAG, "loadPartnerInfoById: " + idPartner);
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
         // Gọi API để lấy thông tin partner
 
         Call<Partner> call = apiService.getPartnerById(idPartner);
@@ -532,7 +532,7 @@ public class MainActivity extends AppCompatActivity{
         SharedPreferences preferences = getSharedPreferences("My_User", Context.MODE_PRIVATE);
         String user = preferences.getString("username", "");
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
 
         Call<List<Bill>> call = apiService.getBillsByStatusNo(user);
         call.enqueue(new Callback<List<Bill>>() {

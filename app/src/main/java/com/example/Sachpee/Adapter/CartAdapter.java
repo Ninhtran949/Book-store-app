@@ -1,5 +1,7 @@
 package com.example.Sachpee.Adapter;
 
+import static com.gun0912.tedpermission.provider.TedPermissionProvider.context;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -41,7 +43,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.viewHolder> {
     public CartAdapter(List<Cart> list, OnCartUpdateListener listener) {
         this.list = list;
         this.cartUpdateListener = listener;
-        apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
     }
 
     NumberFormat numberFormat = new DecimalFormat("#,##0");

@@ -55,6 +55,7 @@ import retrofit2.Response;
 
 
 public class BookFragment extends Fragment {
+    private Context context;
     private List<Product> listBook;
     private RecyclerView rvBook;
     private LinearLayoutManager linearLayoutManager;
@@ -122,7 +123,7 @@ public class BookFragment extends Fragment {
         progressDialog.show();
 
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         Call<List<Product>> call = apiService.getAllProducts();
 
@@ -155,7 +156,7 @@ public class BookFragment extends Fragment {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
         Call<List<Product>> call = apiService.getAllProducts();
 
         call.enqueue(new Callback<List<Product>>() {
@@ -188,7 +189,7 @@ public class BookFragment extends Fragment {
 
 
     public void addProduct(Product product) {
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         // Gọi API để lấy tất cả sản phẩm trước khi thêm sản phẩm mới
         Call<List<Product>> call = apiService.getAllProducts();

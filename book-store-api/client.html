@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Demo</title>
+    <script>
+        async function handlePayment() {
+            const paymentData = {
+                app_user: "user123",
+                amount: 60000,
+                description: "Payment for bill #123456"
+            };
+
+            try {
+                const response = await fetch('http://localhost:8080/zalopay/payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(paymentData)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const result = await response.json();
+                if (result.return_code === 1) {
+                    window.location.href = result.order_url;
+                } else {
+                    alert('Payment failed: ' + result.return_message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while processing the payment: ' + error.message);
+            }
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+</head>
+<body>
+    <h1>Payment Demo</h1>
+    <button onclick="handlePayment()">Thanh toán</button>
+</body>
+</html>

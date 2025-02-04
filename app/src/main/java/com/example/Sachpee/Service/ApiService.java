@@ -13,6 +13,7 @@ import com.example.Sachpee.Model.User;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -26,8 +27,15 @@ import retrofit2.http.Query;
 public interface ApiService {
     @GET("/user/phone/{phoneNumber}")
     Call<User> getUserByPhoneNumber(@Path("phoneNumber") String phoneNumber);
-    @POST("/users/signup")
+
+    @POST("/user/signup")
     Call<Void> signUpUser(@Body User user);
+
+    @POST("/user/login")
+    Call<ResponseBody> loginUser(@Body Map<String, String> loginData);
+
+    @POST("/user/logout")
+    Call<ResponseBody> logoutUser(@Body Map<String, String> requestBody);
 
     // Phương thức để lấy thông tin đối tác bằng idPartner
     @GET("/partners/{idPartner}")
@@ -43,6 +51,7 @@ public interface ApiService {
     Call<Void> addBill(@Body Bill bill);
 
     @DELETE("cart/{idCart}")
+
     Call<Void> deleteCartItem(@Path("idCart") int idCart);
 
     @GET("/bills/")
@@ -111,6 +120,9 @@ public interface ApiService {
     @PATCH("/user/id/{id}")
     Call<Void> updateUserPassword(@Path("id") String id, @Body User user);
 
+    @PATCH("/user/change-password/{id}")
+    Call<Void> changeUserPassword(@Path("id") String userId, @Body Map<String, String> requestBody);
+
     @GET("/bills/range")
     Call<List<Bill>> getBillsInRange(@Query("user") String user, @Query("startDate") String startDate, @Query("endDate") String endDate);
 
@@ -126,4 +138,3 @@ public interface ApiService {
     @GET("/zalopay/check-status-order/{idBill}")
     Call<StatusResponse> checkOrderStatus(@Path("idBill") int idBill);
 }
-

@@ -87,7 +87,7 @@ public class SearchActivity extends AppCompatActivity {
     public void loadProducts() {
         // TODO: Sửa dialog khi load dữ liệu từ API lên fragment
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(this).create(ApiService.class);
 
         // Gọi API để lấy danh sách sản phẩm
         Call<List<Product>> call = apiService.getAllProducts();

@@ -1,6 +1,7 @@
 package com.example.Sachpee.Fragment.ProductFragments;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class TamlyFragment extends Fragment {
     private ProductAdapter adapter;
     private View view;
     private ProductFragment fragment= new ProductFragment();
+    private Context context;
 
 
     @Override
@@ -66,7 +68,7 @@ public class TamlyFragment extends Fragment {
         List<Product> list1 = new ArrayList<>();
 
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
         Call<List<Product>> call = apiService.getAllProducts(); // Giả định rằng API trả về tất cả sản phẩm
 
         call.enqueue(new Callback<List<Product>>() {

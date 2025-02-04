@@ -71,6 +71,8 @@ public class ProductFragment extends Fragment {
     private ArrayAdapter<String> adapterSpiner;
     private SharedPreferences sharedPreferences;
 
+    private Context context;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProductBinding.inflate(inflater, container, false);
@@ -273,7 +275,7 @@ public class ProductFragment extends Fragment {
     }
 
     public void getAllProducts() {
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         Call<List<Product>> call = apiService.getAllProducts();
 
@@ -302,7 +304,7 @@ public class ProductFragment extends Fragment {
 
 
     public void addProduct(Product product) {
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         if (listProduct.size() == 0) {
             product.setCodeProduct(1);
@@ -350,7 +352,7 @@ public class ProductFragment extends Fragment {
 
 
     public void updateProduct(Product product) {
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         // Gửi yêu cầu cập nhật sản phẩm qua API
         Call<Void> call = apiService.updateProduct(product.getCodeProduct(), product);
@@ -374,7 +376,7 @@ public class ProductFragment extends Fragment {
 
 
     public void deleteProduct(Product product) {
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         // Gửi yêu cầu xóa sản phẩm qua API
         Call<Void> call = apiService.deleteProduct(product.getCodeProduct());

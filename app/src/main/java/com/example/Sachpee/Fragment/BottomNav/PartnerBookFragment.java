@@ -35,6 +35,7 @@ public class PartnerBookFragment extends Fragment implements Partner_BookAdapter
     LinearLayoutManager linearLayoutManager;
     List<Partner> list;
     Partner_BookAdapter partner_bookAdapter;
+    private Context context;
 
 
     @Override
@@ -61,7 +62,7 @@ public class PartnerBookFragment extends Fragment implements Partner_BookAdapter
     public List<Partner> getAllPartner() {
         List<Partner> list1 = new ArrayList<>();
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         // Gọi API để lấy danh sách đối tác (Partner)
         Call<List<Partner>> call = apiService.getAllPartners();

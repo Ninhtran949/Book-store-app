@@ -1,6 +1,7 @@
 package com.example.Sachpee.Adapter;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import retrofit2.Response;
 public class PartnerAdapter extends RecyclerView.Adapter<PartnerAdapter.viewHolder> {
     List<Partner> list;
     PartnerFragment fragment;
+    private Context context;
 
     public PartnerAdapter(List<Partner> list, PartnerFragment fragment) {
         this.list = list;
@@ -112,7 +114,7 @@ public class PartnerAdapter extends RecyclerView.Adapter<PartnerAdapter.viewHold
     }
 
     public void deletePartner(Partner partner) {
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         Call<Void> call = apiService.deletePartner(partner.getIdPartner());
 

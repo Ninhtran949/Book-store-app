@@ -35,6 +35,7 @@ public class HistoryOrderFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private AdapterBill adapterBill;
     private List<Bill> listBill = new ArrayList<>();
+    private Context context;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class HistoryOrderFragment extends Fragment {
         rvBill = view.findViewById(R.id.rv_billHistory);
         linearLayoutManager = new LinearLayoutManager(getContext());
         rvBill.setLayoutManager(linearLayoutManager);
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
         adapterBill = new AdapterBill(listBill,getContext(),apiService);
         rvBill.setAdapter(adapterBill);
     }
@@ -56,7 +57,7 @@ public class HistoryOrderFragment extends Fragment {
         SharedPreferences preferences = getContext().getSharedPreferences("My_User", Context.MODE_PRIVATE);
         String user = preferences.getString("username", "");
 
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
 
         // Gọi API để lấy danh sách bill
         Call<List<Bill>> call = apiService.getAllBills();

@@ -98,7 +98,7 @@ public class StatisticalAdapter extends RecyclerView.Adapter<StatisticalAdapter.
     }
     private List<Cart> getAllCart(int i) {
         List<Cart> listCart = new ArrayList<>();
-        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        ApiService apiService = ApiClient.getRetrofitInstance(context).create(ApiService.class);
         Call<List<Cart>> call = apiService.getCartsByBillId(list.get(i).getIdBill());
 
         call.enqueue(new Callback<List<Cart>>() {
