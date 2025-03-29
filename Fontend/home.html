@@ -1,0 +1,282 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Temu Clone
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   .scroll-container {
+     display: flex;
+     overflow-x: auto;
+     scroll-behavior: smooth;
+   }
+   .dropdown-menu {
+     display: none;
+     position: absolute;
+     background-color: white;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     border-radius: 0.25rem;
+     padding: 1rem;
+     z-index: 10;
+   }
+   .dropdown-menu a {
+     display: block;
+     padding: 0.5rem 1rem;
+     color: black;
+     text-decoration: none;
+   }
+   .dropdown-menu a:hover {
+     background-color: #f0f0f0;
+   }
+  </style>
+ </head>
+ <body class="bg-white">
+  <!-- Top Bar -->
+  <div class="bg-black text-white text-sm flex justify-between items-center px-4 py-2">
+   <div>
+    Free shipping on all orders
+    <span class="text-green-500">
+     Limited-time offer
+    </span>
+   </div>
+   <div class="flex items-center space-x-4">
+    <div>
+     Free returns
+     <span class="text-green-500">
+      Up to 90 days*
+     </span>
+    </div>
+    <div class="flex items-center space-x-2">
+     <i class="fas fa-mobile-alt">
+     </i>
+     <span>
+      Get the Temu App
+     </span>
+    </div>
+   </div>
+  </div>
+  <!-- Header -->
+  <header class="bg-red-600 text-white">
+   <div class="container mx-auto flex justify-between items-center py-4 px-4">
+    <div class="flex items-center space-x-4">
+     <img alt="Temu Logo" class="h-10" height="50" src="https://storage.googleapis.com/a1aa/image/1zQydrqow8x0n0v-9bmmrA0tete6yu_gTA3ZQA1mfxo.jpg" width="50"/>
+     <nav class="flex space-x-4">
+      <a class="hover:underline" href="#">
+       Best Sellers
+      </a>
+      <a class="hover:underline" href="#">
+       5-Star Rated
+      </a>
+      <a class="hover:underline" href="#">
+       Lunar year sale
+      </a>
+      <a class="hover:underline" href="#">
+       New Arrivals
+      </a>
+      <div class="relative">
+       <button class="hover:underline" id="categories-button">
+        Categories
+        <i class="fas fa-chevron-down">
+        </i>
+       </button>
+       <!-- Dropdown menu -->
+       <div class="dropdown-menu" id="categories-menu">
+        <a href="#">
+         Category 1
+        </a>
+        <a href="#">
+         Category 2
+        </a>
+        <a href="#">
+         Category 3
+        </a>
+        <a href="#">
+         Category 4
+        </a>
+       </div>
+      </div>
+     </nav>
+    </div>
+    <div class="flex items-center space-x-4">
+     <input class="px-4 py-2 rounded-full text-black" placeholder="men's watch" type="text"/>
+     <i class="fas fa-search">
+     </i>
+     <div class="flex items-center space-x-2">
+      <i class="fas fa-user">
+      </i>
+      <span>
+       Orders &amp; Account
+      </span>
+     </div>
+     <div class="flex items-center space-x-2">
+      <i class="fas fa-question-circle">
+      </i>
+      <span>
+       Support
+      </span>
+     </div>
+     <div class="flex items-center space-x-2">
+      <span>
+       EN
+      </span>
+      <i class="fas fa-globe">
+      </i>
+     </div>
+     <i class="fas fa-shopping-cart">
+     </i>
+    </div>
+   </div>
+  </header>
+  <!-- Main Banner -->
+  <div class="bg-red-600 text-white text-center py-10">
+   <h1 class="text-4xl font-bold">
+    NEW YEAR
+    <span class="text-yellow-400">
+     2025
+    </span>
+   </h1>
+   <h2 class="text-6xl font-bold">
+    SAVE BIG
+   </h2>
+   <button class="bg-yellow-400 text-red-600 px-6 py-2 rounded-full mt-4">
+    SHOP NOW
+   </button>
+   <div class="flex justify-center mt-6 space-x-4">
+    <img alt="Product 1" class="h-40" height="150" src="https://storage.googleapis.com/a1aa/image/n6zDaG0OqQYFaFxHUMm8z7Zpz1dToN_U_aCQavIQTqg.jpg" width="150"/>
+    <img alt="Product 2" class="h-40" height="150" src="https://storage.googleapis.com/a1aa/image/-I7Tj8oLrs4ipq61qgdTw7qvZ3ehOdYbtMjSCtEVHVM.jpg" width="150"/>
+   </div>
+  </div>
+  <!-- Why Choose Temu -->
+  <div class="bg-green-600 text-white text-center py-4">
+   <div class="container mx-auto flex justify-between items-center px-4">
+    <span>
+     Why choose Temu
+    </span>
+    <div class="flex items-center space-x-4">
+     <div class="flex items-center space-x-2">
+      <i class="fas fa-lock">
+      </i>
+      <span>
+       Security privacy
+      </span>
+     </div>
+     <div class="flex items-center space-x-2">
+      <i class="fas fa-credit-card">
+      </i>
+      <span>
+       Safe payments
+      </span>
+     </div>
+     <div class="flex items-center space-x-2">
+      <i class="fas fa-truck">
+      </i>
+      <span>
+       Delivery guarantee
+      </span>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- Explore Your Interests -->
+  <div class="text-center py-10">
+   <h2 class="text-2xl font-bold text-red-600">
+    NEW YEAR
+   </h2>
+   <h3 class="text-3xl font-bold">
+    EXPLORE YOUR INTERESTS
+   </h3>
+   <div class="flex justify-center items-center mt-6 space-x-4">
+    <button class="text-2xl" id="scroll-left">
+     <i class="fas fa-chevron-left">
+     </i>
+    </button>
+    <div class="scroll-container flex space-x-8 px-4">
+     <button class="bg-white border border-gray-300 px-4 py-2 rounded-full">
+      Men's Shoes
+     </button>
+     <button class="bg-white border border-gray-300 px-4 py-2 rounded-full">
+      Smart Home
+     </button>
+     <button class="bg-white border border-gray-300 px-4 py-2 rounded-full">
+      Appliances
+     </button>
+     <button class="bg-white border border-gray-300 px-4 py-2 rounded-full">
+      Electronics
+     </button>
+     <button class="bg-white border border-gray-300 px-4 py-2 rounded-full">
+      Beauty &amp; Health
+     </button>
+    </div>
+    <button class="text-2xl" id="scroll-right">
+     <i class="fas fa-chevron-right">
+     </i>
+    </button>
+   </div>
+  </div>
+  <!-- Product Grid -->
+  <div class="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
+   <div class="bg-white p-4 rounded shadow">
+    <img alt="Product 1" class="w-full h-40 object-cover" height="200" src="https://storage.googleapis.com/a1aa/image/n6zDaG0OqQYFaFxHUMm8z7Zpz1dToN_U_aCQavIQTqg.jpg" width="200"/>
+    <h4 class="text-center mt-2">
+     Product 1
+    </h4>
+   </div>
+   <div class="bg-white p-4 rounded shadow">
+    <img alt="Product 2" class="w-full h-40 object-cover" height="200" src="https://storage.googleapis.com/a1aa/image/-I7Tj8oLrs4ipq61qgdTw7qvZ3ehOdYbtMjSCtEVHVM.jpg" width="200"/>
+    <h4 class="text-center mt-2">
+     Product 2
+    </h4>
+   </div>
+   <div class="bg-white p-4 rounded shadow">
+    <img alt="Product 3" class="w-full h-40 object-cover" height="200" src="https://storage.googleapis.com/a1aa/image/JFw_6uizZKKw-3wyrYxapDjpcXG213JpXS8V6LRdPrQ.jpg" width="200"/>
+    <h4 class="text-center mt-2">
+     Product 3
+    </h4>
+   </div>
+   <div class="bg-white p-4 rounded shadow">
+    <img alt="Product 4" class="w-full h-40 object-cover" height="200" src="https://storage.googleapis.com/a1aa/image/p0m8S6juteGYJtssoz5WrltOjhLqwXFGdy5e0IZc63M.jpg" width="200"/>
+    <h4 class="text-center mt-2">
+     Product 4
+    </h4>
+   </div>
+  </div>
+  <script>
+   document.getElementById('scroll-left').addEventListener('click', function() {
+     document.querySelector('.scroll-container').scrollBy({
+       left: -200,
+       behavior: 'smooth'
+     });
+   });
+
+   document.getElementById('scroll-right').addEventListener('click', function() {
+     document.querySelector('.scroll-container').scrollBy({
+       left: 200,
+       behavior: 'smooth'
+     });
+   });
+
+   const categoriesButton = document.getElementById('categories-button');
+   const categoriesMenu = document.getElementById('categories-menu');
+
+   categoriesButton.addEventListener('mouseover', () => {
+     categoriesMenu.style.display = 'block';
+   });
+
+   categoriesButton.addEventListener('mouseout', () => {
+     categoriesMenu.style.display = 'none';
+   });
+
+   categoriesMenu.addEventListener('mouseover', () => {
+     categoriesMenu.style.display = 'block';
+   });
+
+   categoriesMenu.addEventListener('mouseout', () => {
+     categoriesMenu.style.display = 'none';
+   });
+  </script>
+ </body>
+</html>
