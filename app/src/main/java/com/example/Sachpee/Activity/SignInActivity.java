@@ -84,12 +84,39 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.btn_SignInActivity_signIn:
-                userLogin();
+                if(!logins()){
+                    userLogin();
+
+                }
+                logins();
                 break;
             default:
                 Toast.makeText(this, "Chức năng đang phát triển", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    public boolean logins(){
+        //TODO validate partner login
+        String email = formEmail.getEditText().getText().toString().trim();
+        String password = formPassword.getEditText().getText().toString().trim();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUserPartner().equals(email) && list.get(i).getPasswordPartner().equals(password)){
+                remember("partner", String.valueOf(list.get(i).getIdPartner()),"partnerAccessToken","partnerRefreshToken");
+                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                startActivity(intent);
+                finishAffinity();
+                return true;
+            }
+        }
+        if (email.equals("admin") && password.equals("admin") ){
+            remember("admin", "admin", "adminAccessToken", "adminRefreshToken");
+            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+            startActivity(intent);
+            finishAffinity();
+            return true;
+        }
+        return false;
     }
 
     private void userLogin() {

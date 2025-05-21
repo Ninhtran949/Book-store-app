@@ -6,8 +6,8 @@
         <domain includeSubdomains="true">192.168.28.217</domain>
         <domain includeSubdomains="true">http://192.168.0.109:8080</domain>
         <domain includeSubdomains="true">localhost</domain>
-        <domain includeSubdomains="true">192.168.0.4</domain>
-        <domain includeSubdomains="true">http://192.168.28.217</domain>
+        <domain includeSubdomains="true">192.168.31.106</domain>
+        <domain includeSubdomains="true">http://192.168.31.106</domain>
         <domain includeSubdomains="true">book-store-api-ewcr.onrender.com</domain>
 
     </domain-config>

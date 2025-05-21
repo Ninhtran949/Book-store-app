@@ -192,8 +192,8 @@ public class AdapterBill extends RecyclerView.Adapter<AdapterBill.ViewHolder> {
 
     // AdapterBill.java (Phương thức handlePayment)
     private void handlePayment(Bill bill, ViewHolder holder) {
-        String appUser = bill.getIdClient();
-        int amount = bill.getTotal();
+        String appUser = bill.getIdClient();                                //info payment
+        int amount = bill.getTotal();                                       //info payment
         String description = "Payment for bill #" + bill.getIdBill();
 
         PaymentRequest paymentRequest = new PaymentRequest(appUser, amount, description);
