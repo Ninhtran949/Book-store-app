@@ -21,6 +21,9 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.Sachpee.Activity.SignInActivity;
 import com.example.Sachpee.Fragment.ProductFragments.ProductFragment;
 import com.example.Sachpee.Model.Cart;
@@ -28,7 +31,6 @@ import com.example.Sachpee.Model.Product;
 import com.example.Sachpee.R;
 import com.example.Sachpee.Service.ApiClient;
 import com.example.Sachpee.Service.ApiService;
-
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -74,31 +76,70 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         // Gọi getAllCart() để lấy danh sách giỏ hàng
         getAllCart(user); // Cập nhật giỏ hàng trước khi thực hiện các thao tác
 
-        byte[] imgByte = Base64.decode(product.getImgProduct(), Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
-        holder.imgProduct.setImageBitmap(bitmap);
+        try {
+            // Log để debug
+            Log.d("ProductAdapter", String.format(
+                    "Loading image for product: %s, Image type: %s",
+                    product.getNameProduct(),
+                    product.isBase64Image() ? "Base64" :
+                            product.isUrlImage() ? "URL" : "Unknown"
+            ));
+
+            if (product.isBase64Image()) {
+                // Xử lý ảnh base64
+                String base64Image = product.getImgProduct();
+                if (base64Image.startsWith("/9j/")) {
+                    base64Image = "data:image/jpeg;base64," + base64Image;
+                }
+                byte[] imgByte = Base64.decode(base64Image.split(",")[1], Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imgByte, 0, imgByte.length);
+                holder.imgProduct.setImageBitmap(bitmap);
+            } else if (product.isUrlImage()) {
+                // Xử lý ảnh URL bằng Glide
+                RequestOptions requestOptions = new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.ic_baseline_image_24)
+                        .error(R.drawable.ic_baseline_image_24);
+
+                Glide.with(context)
+                        .load(product.getImgProduct())
+                        .apply(requestOptions)
+                        .into(holder.imgProduct);
+
+                Log.d("ProductAdapter", "Loading URL image: " + product.getImgProduct());
+            } else {
+                // Unknown format, use placeholder
+                holder.imgProduct.setImageResource(R.drawable.ic_baseline_image_24);
+                Log.w("ProductAdapter", "Unknown image format for product: " + product.getNameProduct());
+            }
+        } catch (Exception e) {
+            // Log error and use placeholder
+            Log.e("ProductAdapter", "Error loading image for product: " + product.getNameProduct(), e);
+            holder.imgProduct.setImageResource(R.drawable.ic_baseline_image_24);
+        }
+
         holder.tvNameProduct.setText(String.valueOf(product.getNameProduct()));
         holder.tvPriceProduct.setText(numberFormat.format(product.getPriceProduct()) + " đ");
         holder.cardProduct.setOnClickListener(view -> {
-                if (role.equals("admin") || role.equals("partner")) {
-                    if (holder.btnUpdateProduct.getVisibility() == View.VISIBLE || holder.btnDeleteProduct.getVisibility() == View.VISIBLE) {
-                        holder.btnUpdateProduct.setVisibility(View.GONE);
-                        holder.btnDeleteProduct.setVisibility(View.GONE);
-                    } else {
-                        holder.btnUpdateProduct.setVisibility(View.VISIBLE);
-                        holder.btnDeleteProduct.setVisibility(View.VISIBLE);
-                    }
+            if (role.equals("admin") || role.equals("partner")) {
+                if (holder.btnUpdateProduct.getVisibility() == View.VISIBLE || holder.btnDeleteProduct.getVisibility() == View.VISIBLE) {
+                    holder.btnUpdateProduct.setVisibility(View.GONE);
+                    holder.btnDeleteProduct.setVisibility(View.GONE);
+                } else {
+                    holder.btnUpdateProduct.setVisibility(View.VISIBLE);
+                    holder.btnDeleteProduct.setVisibility(View.VISIBLE);
                 }
-            });
-            holder.btnUpdateProduct.setOnClickListener(view -> {
-                fragment.dialogProduct(product, 1, context);
-            });
-            holder.btnDeleteProduct.setOnClickListener(view -> {
-                showDialogDelete(product);
-            });
+            }
+        });
+        holder.btnUpdateProduct.setOnClickListener(view -> {
+            fragment.dialogProduct(product, 1, context);
+        });
+        holder.btnDeleteProduct.setOnClickListener(view -> {
+            showDialogDelete(product);
+        });
 
-            holder.btn_addCart.setOnClickListener(view -> {
-                if (!user.equals("")) {
+        holder.btn_addCart.setOnClickListener(view -> {
+            if (!user.equals("")) {
                 StringBuilder str = new StringBuilder();
                 Cart cart = new Cart();
                 cart.setUserClient(user);
@@ -140,10 +181,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                 } else {
                     addProductCart(cart);
                 }
-                }else {
-                    showDialogLogin();
-                }
-            });
+            }else {
+                showDialogLogin();
+            }
+        });
 
 
 
