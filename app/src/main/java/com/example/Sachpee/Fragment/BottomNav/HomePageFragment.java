@@ -102,10 +102,10 @@ public class HomePageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
-        
+
         // Khởi tạo ShimmerFrameLayout
         mShimmerViewContainer = view.findViewById(R.id.shimmer_view_container);
-        
+
         // Khởi tạo các view cho slider
         viewPager = view.findViewById(R.id.main_slider_image);
         circleIndicator = view.findViewById(R.id.circle_indicator);
@@ -140,53 +140,53 @@ public class HomePageFragment extends Fragment {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
         // Setup click listeners cho các CardView
-        card_vanhoc_home.setOnClickListener(v -> 
-            fragmentManager.beginTransaction()
-                .replace(R.id.frame_Home, new VanhocFragment())
-                .addToBackStack(null)
-                .commit());
+        card_vanhoc_home.setOnClickListener(v ->
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_Home, new VanhocFragment())
+                        .addToBackStack(null)
+                        .commit());
 
-        card_kinhte_home.setOnClickListener(v -> 
-            fragmentManager.beginTransaction()
-                .replace(R.id.frame_Home, new KinhteFragment())
-                .addToBackStack(null)
-                .commit());
+        card_kinhte_home.setOnClickListener(v ->
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_Home, new KinhteFragment())
+                        .addToBackStack(null)
+                        .commit());
 
-        card_tamly_home.setOnClickListener(v -> 
-            fragmentManager.beginTransaction()
-                .replace(R.id.frame_Home, new TamlyFragment())
-                .addToBackStack(null)
-                .commit());
+        card_tamly_home.setOnClickListener(v ->
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_Home, new TamlyFragment())
+                        .addToBackStack(null)
+                        .commit());
 
-        card_giaoduc_home.setOnClickListener(v -> 
-            fragmentManager.beginTransaction()
-                .replace(R.id.frame_Home, new PartnerBookFragment())
-                .addToBackStack(null)
-                .commit());
+        card_giaoduc_home.setOnClickListener(v ->
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_Home, new PartnerBookFragment())
+                        .addToBackStack(null)
+                        .commit());
 
-        card_thieunhi_home.setOnClickListener(v -> 
-            fragmentManager.beginTransaction()
-                .replace(R.id.frame_Home, new ThieunhiFragment())
-                .addToBackStack(null)
-                .commit());
+        card_thieunhi_home.setOnClickListener(v ->
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_Home, new ThieunhiFragment())
+                        .addToBackStack(null)
+                        .commit());
 
-        card_hoiky_home.setOnClickListener(v -> 
-            fragmentManager.beginTransaction()
-                .replace(R.id.frame_Home, new HoikyFragment())
-                .addToBackStack(null)
-                .commit());
+        card_hoiky_home.setOnClickListener(v ->
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_Home, new HoikyFragment())
+                        .addToBackStack(null)
+                        .commit());
 
-        card_giaokhoa_home.setOnClickListener(v -> 
-            fragmentManager.beginTransaction()
-                .replace(R.id.frame_Home, new GiaokhoaFragment())
-                .addToBackStack(null)
-                .commit());
+        card_giaokhoa_home.setOnClickListener(v ->
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_Home, new GiaokhoaFragment())
+                        .addToBackStack(null)
+                        .commit());
 
-        card_ngoaingu_home.setOnClickListener(v -> 
-            fragmentManager.beginTransaction()
-                .replace(R.id.frame_Home, new NgoainguFragment())
-                .addToBackStack(null)
-                .commit());
+        card_ngoaingu_home.setOnClickListener(v ->
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_Home, new NgoainguFragment())
+                        .addToBackStack(null)
+                        .commit());
 
         // Click listener cho nút "Xem tất cả"
         View viewAllTrending = view.findViewById(R.id.tv_view_all_trending);
@@ -285,15 +285,18 @@ public class HomePageFragment extends Fragment {
 
     public void getProduct() {
         mShimmerViewContainer.startShimmer();
-        
+
         ApiService apiService = ApiClient.getRetrofitInstance(requireContext()).create(ApiService.class);
-        
+
         // Gọi API lấy tất cả sản phẩm
         Call<List<Product>> call = apiService.getAllProducts();
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    // Log response for debugging
+                    Log.d("HomePageFragment", "API Response received: " + response.body().size() + " products");
+
                     // Xử lý dữ liệu hiện tại
                     // Xóa sạch các danh sách trước khi thêm mới
                     listTamly.clear();
@@ -306,8 +309,40 @@ public class HomePageFragment extends Fragment {
                     listNgoaingu.clear();
                     listProduct.clear();
 
-                    // Thêm dữ liệu mới
-                    listProduct.addAll(response.body());
+                    // Thêm dữ liệu mới và xử lý ảnh
+                    for (Product product : response.body()) {
+                        try {
+                            // Log product details for debugging
+                            Log.d("HomePageFragment", String.format(
+                                    "Processing product: %s, Image type: %s, Image length: %d",
+                                    product.getNameProduct(),
+                                    product.isBase64Image() ? "Base64" :
+                                            product.isUrlImage() ? "URL" : "Unknown",
+                                    product.getImgProduct() != null ? product.getImgProduct().length() : 0
+                            ));
+
+                            // Ensure safe image URL
+                            String originalImage = product.getImgProduct();
+                            String safeImageUrl = product.getSafeImageUrl();
+
+                            if (!safeImageUrl.equals(originalImage)) {
+                                Log.d("HomePageFragment", String.format(
+                                        "Image URL sanitized for product: %s\nOriginal: %s\nSanitized: %s",
+                                        product.getNameProduct(),
+                                        originalImage != null ? originalImage.substring(0, Math.min(50, originalImage.length())) + "..." : "null",
+                                        safeImageUrl != null ? safeImageUrl.substring(0, Math.min(50, safeImageUrl.length())) + "..." : "null"
+                                ));
+                                product.setImgProduct(safeImageUrl);
+                            }
+
+                            listProduct.add(product);
+                        } catch (Exception e) {
+                            Log.e("HomePageFragment", "Error processing product: " + product.getNameProduct(), e);
+                            // Set empty image if there's an error
+                            product.setImgProduct("");
+                            listProduct.add(product);
+                        }
+                    }
 
                     // Sắp xếp và phân loại sản phẩm
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -349,8 +384,8 @@ public class HomePageFragment extends Fragment {
                     List<Product> allProducts = response.body();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         // Sắp xếp theo mã sản phẩm giảm dần (giả sử mã lớn hơn = mới hơn)
-                        Collections.sort(allProducts, (p1, p2) -> 
-                            Integer.compare(p2.getCodeProduct(), p1.getCodeProduct()));
+                        Collections.sort(allProducts, (p1, p2) ->
+                                Integer.compare(p2.getCodeProduct(), p1.getCodeProduct()));
                     }
                     // Lấy 10 sản phẩm đầu tiên
                     for (int i = 0; i < Math.min(10, allProducts.size()); i++) {
@@ -415,19 +450,19 @@ public class HomePageFragment extends Fragment {
         rv_trending_home.setLayoutManager(trendingManager);
         rv_trending_home.setHasFixedSize(true);
         rv_trending_home.setItemAnimator(new DefaultItemAnimator());
-        
+
         // Thêm decoration cho khoảng cách giữa các item
         rv_trending_home.addItemDecoration(new ItemDecoration() {
             @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, 
-                                     @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
+                                       @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 int spacing = getResources().getDimensionPixelSize(R.dimen.item_horizontal_spacing);
                 int position = parent.getChildAdapterPosition(view);
-                
+
                 outRect.left = spacing;
                 outRect.right = spacing;
                 outRect.bottom = spacing;
-                
+
                 // Thêm top margin cho hàng đầu tiên
                 if (position < 2) {
                     outRect.top = spacing;
@@ -444,19 +479,19 @@ public class HomePageFragment extends Fragment {
         rv_NewBook_Home.setLayoutManager(newBooksManager);
         rv_NewBook_Home.setHasFixedSize(true);
         rv_NewBook_Home.setItemAnimator(new DefaultItemAnimator());
-        
+
         // Thêm decoration tương tự cho new books
         rv_NewBook_Home.addItemDecoration(new ItemDecoration() {
             @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, 
-                                     @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
+                                       @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
                 int spacing = getResources().getDimensionPixelSize(R.dimen.item_horizontal_spacing);
                 int position = parent.getChildAdapterPosition(view);
-                
+
                 outRect.left = spacing;
                 outRect.right = spacing;
                 outRect.bottom = spacing;
-                
+
                 // Thêm top margin cho hàng đầu tiên
                 if (position < 2) {
                     outRect.top = spacing;

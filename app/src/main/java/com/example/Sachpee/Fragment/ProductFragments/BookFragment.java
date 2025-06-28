@@ -87,7 +87,7 @@ public class BookFragment extends Fragment {
         sharedPreferences = getContext().getSharedPreferences("My_User", Context.MODE_PRIVATE);
         user = sharedPreferences.getString("username","");
         if(user.equals("admin")){
-           view.findViewById(R.id.fab_addBook_fragment).setVisibility(View.GONE);
+            view.findViewById(R.id.fab_addBook_fragment).setVisibility(View.GONE);
         }else {
             view.findViewById(R.id.fab_addBook_fragment).setVisibility(View.VISIBLE);
         }
@@ -354,17 +354,17 @@ public class BookFragment extends Fragment {
             byte[] imgByte = outputStream.toByteArray();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 imgProduct = Base64.getEncoder().encodeToString(imgByte);
+                Log.d("BookFragment", "Image converted to Base64 successfully");
             }
         }catch (Exception e){
-            e.printStackTrace();
+            Log.e("BookFragment", "Error converting image to Base64: " + e.getMessage());
+            imgProduct = ""; // Set empty string if conversion fails
         }
-
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("My_User", Context.MODE_PRIVATE);
         userPartner = sharedPreferences.getString("username","");
         codeCategory = 4;
         priceProduct = til_priceProduct.getEditText().getText().toString();
-
     }
     public boolean isEmptys(String str,TextInputLayout til){
         if (str.isEmpty()){
@@ -377,7 +377,7 @@ public class BookFragment extends Fragment {
 
     }
     public boolean errorImg(String str, TextView tv){
-        if (str != null){
+        if (str != null && !str.isEmpty()){
             tv.setText("");
             return true;
         }else {
@@ -387,8 +387,11 @@ public class BookFragment extends Fragment {
     }
     public void validate(){
         if (isEmptys(nameProduct, til_nameProduct) && isEmptys(priceProduct, til_priceProduct) && errorImg(imgProduct, tvErrorImg)) {
+            Log.d("BookFragment", "Validation passed for product: " + nameProduct);
             setDataProduct();
             removeAll();
+        } else {
+            Log.d("BookFragment", "Validation failed for product: " + nameProduct);
         }
     }
     public void removeAll(){
@@ -402,9 +405,17 @@ public class BookFragment extends Fragment {
         product.setCodeCategory(codeCategory);
         product.setNameProduct(nameProduct);
         product.setPriceProduct(Integer.parseInt(priceProduct));
-        product.setImgProduct(imgProduct);
-        addProduct(product);
 
+        // Ensure image is properly set
+        if (imgProduct != null && !imgProduct.isEmpty()) {
+            product.setImgProduct(imgProduct);
+            Log.d("BookFragment", "Setting image for product: " + nameProduct);
+        } else {
+            product.setImgProduct("");
+            Log.w("BookFragment", "No image set for product: " + nameProduct);
+        }
+
+        addProduct(product);
     }
 
 }
