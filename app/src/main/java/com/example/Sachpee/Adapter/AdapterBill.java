@@ -205,16 +205,18 @@ public class AdapterBill extends RecyclerView.Adapter<AdapterBill.ViewHolder> {
                     PaymentResponse paymentResponse = response.body();
                     if (paymentResponse.getReturnCode() == 1) {
                         Log.d("AdapterBill", "Payment successful: " + paymentResponse.getOrderUrl());
-                        Intent intent = new Intent(context, PaymentWebViewActivity.class);
-                        intent.putExtra("ORDER_URL", paymentResponse.getOrderUrl());
-                        context.startActivity(intent);
+                        //Intent intent = new Intent(context, PaymentWebViewActivity.class);
+                        //intent.putExtra("ORDER_URL", paymentResponse.getOrderUrl());
+                        //context.startActivity(intent);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(paymentResponse.getOrderUrl()));
+                        context.startActivity(browserIntent);
                         // Gọi API để cập nhật trạng thái hóa đơn
                         updateBillStatus(String.valueOf(bill.getIdBill()));
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                holder.btn_paymentBill.setText("Đợi người bán xác nhận");
+                                holder.btn_paymentBill.setText("Đang thanh toán...");
                                 holder.btn_paymentBill.setBackgroundColor(Color.GRAY);
                                 holder.btn_paymentBill.setEnabled(false);
                             }
