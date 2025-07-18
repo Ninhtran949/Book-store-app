@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
     private static Retrofit retrofit;
 //    private static final String BASE_URL = "https://book-store-api-ewcr.onrender.com/";  // Đặt URL API  ở đây
-    private static final String BASE_URL = "https://book-store-api-ewcr.onrender.com/";  // Đặt URL API  ở đây
+    private static final String BASE_URL = "https://book-store-api-ewcr.onrender.com/";  // Url Render 
     public static Retrofit getRetrofitInstance(Context context) {
         if (retrofit == null) {
             OkHttpClient client = new OkHttpClient.Builder()

@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./Backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./Backend:/usr/src/app
+    environment:
+      - NODE_ENV=development
+
+  frontend:
+    build: ./app
+    volumes:
+      - ./app:/workspace
+    command: ./gradlew assembleDebug
+    # Không cần expose port vì đây chỉ là build APK

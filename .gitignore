@@ -13,3 +13,36 @@
 .externalNativeBuild
 .cxx
 local.properties
+# === Android/Java (app) ===
+*.iml
+.gradle/
+build/
+local.properties
+.idea/
+.DS_Store
+*.apk
+*.ap_
+captures/
+output.json
+
+# === Node.js (Backend) ===
+node_modules/
+npm-debug.log*
+.env
+.env.*
+dist/
+logs/
+*.log
+
+# === General ===
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+*.rej
+*.class
+
+# === OS files ===
+Thumbs.db
+.DS_Store

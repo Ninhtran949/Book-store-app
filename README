@@ -1,0 +1,17 @@
+## Cấu hình môi trường Backend
+
+
+1. Điền các thông tin cấu hình vào file `Backend/.env`.
+
+## Build và chạy Backend
+
+```sh
+docker-compose up --build backend
+```
+
+## Build APK Android
+
+```sh
+docker-compose up --build frontend
+# APK sẽ nằm ở app/build/outputs/apk/debug/
+```
